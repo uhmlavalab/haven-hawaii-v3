@@ -28,8 +28,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    // Add 'implements OnInit' to the class.
     const trace1 = {
       x: [1, 2, 3, 4],
       y: [10, 15, 13, 17],
@@ -56,7 +56,6 @@ export class AppComponent implements OnInit {
   }
 
   setMap(leafletMap: L.Map) {
-    console.log('hi')
     this.leafletMap = leafletMap;
   }
 }

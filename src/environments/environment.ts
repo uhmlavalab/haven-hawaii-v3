@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyC3XufBC_X1qBi24M_TBKGnqRqLnY8ADIY",
-    authDomain: "haven-hawaii-v3.firebaseapp.com",
-    databaseURL: "https://haven-hawaii-v3.firebaseio.com",
-    projectId: "haven-hawaii-v3",
-    storageBucket: "haven-hawaii-v3.appspot.com",
-    messagingSenderId: "819495245266",
-    appId: "1:819495245266:web:32006aeced89ec23"
+    apiKey: 'AIzaSyC3XufBC_X1qBi24M_TBKGnqRqLnY8ADIY',
+    authDomain: 'haven-hawaii-v3.firebaseapp.com',
+    databaseURL: 'https://haven-hawaii-v3.firebaseio.com',
+    projectId: 'haven-hawaii-v3',
+    storageBucket: 'haven-hawaii-v3.appspot.com',
+    messagingSenderId: '819495245266',
+    appId: '1:819495245266:web:32006aeced89ec23'
   }
 };
 
