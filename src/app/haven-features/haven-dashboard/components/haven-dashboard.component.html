@@ -1,0 +1,26 @@
+
+<div class="doughnut" [@rotatedState]='state' >
+
+</div>
+
+<img class="logo" src="./assets/logo/havenlogo.png" mat-elevation-z2>
+
+<button mat-mini-fab (click)="rotate()" color="primary" class="button-1">
+  <mat-icon>perm_identity</mat-icon>
+</button>
+
+<button mat-mini-fab (click)="rotate()" color="primary" class="button-2">
+  <mat-icon>show_chart</mat-icon>
+</button>
+
+<button mat-mini-fab (click)="rotate()" color="primary" class="button-3">
+  <mat-icon>map</mat-icon>
+</button>
+
+<button mat-mini-fab (click)="addWindow()" color="primary" class="button-4">
+  <mat-icon>add</mat-icon>
+</button>
+
+<mat-slider min="2016" max="2045" color="primary" [(ngModel)]="value"></mat-slider>
+
+

@@ -1,0 +1,29 @@
+.background {
+  height: 2000px;
+  width: 2000px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+  background-color: #f5f5f5;
+  background-size: 120px 120px, 40px 40px;
+  background-image: radial-gradient(circle, gray 1.1px, transparent 1px),
+    radial-gradient(circle, darkgray 1px, transparent 1px);
+  border-style: dashed;
+  border-color: gray;
+  cursor: grab;
+  padding: 16px;
+  margin-bottom: 16px;
+
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.09),
+    4px 4px 3px 1px rgba(0, 0, 0, 0.1), 2px 2px 10px 5px rgba(0, 0, 0, 0.1);
+}
+
+app-haven-dashboard {
+  position: absolute;
+  top: 100vh;
+}
+
+
+
+
