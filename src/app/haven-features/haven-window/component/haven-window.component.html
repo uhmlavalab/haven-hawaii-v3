@@ -1,26 +1,11 @@
 <div #windowDiv class="window" style="position:absolute;" appHavenWindowBringforward [havenWindow]="havenWindow">
 
-  <mat-toolbar #windowHeader class="window-header" appHavenWindowDrag [havenWindow]="havenWindow"
-    [windowDiv]="windowDiv" color="primary">
-    <mat-toolbar-row>
-      <span>{{ havenWindow.header }} </span>
-      <span class="example-spacer"></span>
-      <mat-icon class="example-icon" appHavenWindowMaximize [havenWindow]="havenWindow" [windowDiv]="windowDiv">
-        open_in_new</mat-icon>
-      <mat-icon class="example-icon" (click)="removeWindow()">close</mat-icon>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <div class="space" #chartDiv>
-    <div style="height: 100%;" leaflet  (leafletMapReady)="setMap($event)" [leafletOptions]="options">
+  <div class="app-container" #chartDiv>
+    <div style="height: 100%;" leaflet (leafletMapReady)="setMap($event)" [leafletOptions]="options">
     </div>
   </div>
-  <mat-toolbar #windowFooter class="window-footer" color="primary" style="min-height: 20px; height: 20px;">
-    <mat-toolbar-row>
-      <span style="font-size: 12px"> {{ havenWindow.footer }} </span>
-      <span class="example-spacer"></span>
-      <mat-icon class="example-resize" appHavenWindowResize [havenWindow]="havenWindow" [windowDiv]="windowDiv">reorder
-      </mat-icon>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
+  <div class="handle" appHavenWindowDrag [windowDiv]="windowDiv" [havenWindow]="havenWindow">3</div>
+  <div class="resize-handle" appHavenWindowResize [windowDiv]="windowDiv" [havenWindow]="havenWindow"></div>
 </div>
+
+

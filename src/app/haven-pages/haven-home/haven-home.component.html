@@ -1,7 +1,18 @@
-
-
 <div #background class="background" appHavenBackgroundDrag [background]="background">
   <app-haven-window-factory></app-haven-window-factory>
 </div>
 
 <app-haven-dashboard></app-haven-dashboard>
+
+<button mat-mini-fab color="primary" class="zoom-in">
+  <mat-icon>add</mat-icon>
+</button>
+
+<button mat-mini-fab color="primary" class="zoom-out">
+  <mat-icon>remove</mat-icon>
+</button>
+
+
+
+<app-year-selector class="mat-elevation-z8"></app-year-selector>
+<app-scenario-legend class="mat-elevation-z8"></app-scenario-legend>

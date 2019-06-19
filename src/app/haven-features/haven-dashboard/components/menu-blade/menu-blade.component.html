@@ -1,0 +1,3 @@
+<div class="doughnut" [@bladeState]='menuState'>
+</div>
+<app-menu-blade-item *ngFor="let item of menuItems" [menuState]="menuState" [button]="item"></app-menu-blade-item>

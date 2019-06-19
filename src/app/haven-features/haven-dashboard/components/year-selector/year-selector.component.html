@@ -1,0 +1,12 @@
+
+<div class="year-chart" [@toggleMenuAnim]="menuState" >
+  <div class="year-button" (click)="toggleMenu()"><p>{{year}}</p></div>
+  <div class="chart">
+      <canvas #lineDiv width="500" height="170"></canvas>
+      <mat-slider min="2016" max="2045" color="primary"(input)="yearChange($event)"></mat-slider>
+  </div>
+
+</div>
+
+
+

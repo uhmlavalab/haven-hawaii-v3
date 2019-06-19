@@ -1,0 +1,9 @@
+.doughnut {
+  position: absolute;
+  border-top: 100px solid gray;
+  border-right: 100px solid gray;
+  border-radius: 0 100% 0 0;
+  height: 175px;
+  width: 175px;
+  bottom: 0;
+}

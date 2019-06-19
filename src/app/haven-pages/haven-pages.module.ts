@@ -17,7 +17,7 @@ import { HavenBackgroundDragDirective } from './haven-home/haven-background-drag
   declarations: [
     HavenLoginComponent,
     HavenHomeComponent,
-    HavenBackgroundDragDirective
+    HavenBackgroundDragDirective,
   ],
   exports: [
     HavenLoginComponent,

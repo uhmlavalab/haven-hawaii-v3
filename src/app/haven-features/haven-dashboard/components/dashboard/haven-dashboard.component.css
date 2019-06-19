@@ -8,12 +8,6 @@
   z-index: 1000;
 }
 
-mat-slider {
-  width: 200px;
-  position: absolute;
-  bottom: -4px;
-  left: 160px;
-}
 
 .button-1 {
   left: 110.82px;
@@ -39,12 +33,4 @@ mat-slider {
   position: absolute;
 }
 
-.doughnut {
-  position: absolute;
-  border-top: 100px solid gray;
-  border-right: 100px solid gray;
-  border-radius: 0 100% 0 0;
-  height: 175px;
-  width: 175px;
-  bottom: 0;
-}
+

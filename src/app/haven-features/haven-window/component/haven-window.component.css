@@ -1,58 +1,50 @@
-.example-spacer {
-  flex: 1 1 auto;
-}
 
-.window-footer {
-  height: 20px;
-  min-height: 20px;
-}
-
-.window-header {
-  height: 30px;
-  min-height: 30px;
-}
-
-.mat-toolbar-row {
-  padding: 0px 8px;
-}
-
-.drawer-toggle{
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translatey(-50%);
-  z-index: 400;
-}
-
-.space {
-  height: calc(100% - 20px - 30px);
-  background-color:white;
-}
-
-.example-sidenav-content {
-  height: 100%;
-}
-
-.mat-raised-button{
-  width: 100%;
-  margin-top: 8px;
-}
-
-.app-sidenav {
-  padding: 4px;
-  width: 150px;
-  box-shadow: 10px 0px 20px 2px rgba(202, 199, 199, 0.2),
-              2px 0px 6px 3px rgba(125, 125, 125, 0.14),
-              1px 0px 10px 0px rgba(23, 22, 22, 0.12);
-}
 
 .window{
   position: absolute;
   box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.09),
               4px 4px 3px 1px rgba(0, 0, 0, 0.1),
               2px 2px 10px 5px rgba(0, 0, 0, 0.1);
+
 }
 
-#asdf {
-  background-color: black !important;
+.app-container {
+  border-radius: 20px;
+  overflow:hidden;
+  border: 3px #28608d solid;
+  height: 100%;
+  width: 100%;
+}
+
+.handle {
+  user-select: none;
+  height: 65px;
+  width: 65px;
+  position: absolute;
+  bottom: -18px;
+  left: -19px;
+  z-index: 1000;
+  background-color: white;
+  border: 5px #28608d solid;
+  border-radius: 50%;
+  display: inline-block;
+  line-height: 65px;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  color: #28608d;
+}
+
+.resize-handle {
+  user-select: none;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  bottom: -15px;
+  right: -15px;
+  z-index: 1000;
+  background-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: se-resize;
 }

@@ -1,0 +1,42 @@
+.year-button {
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  border-radius: 100%;
+  position:absolute;
+  background: #28608d;
+  z-index: -1;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.year-button > p {
+  transform: translate(0, -10px);
+}
+
+.year-chart {
+  background: gray;
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  border-radius: 15px;
+  padding: 8px;
+}
+
+.chart {
+  width: 100%;
+  height: 100%;
+  background: lightgray;
+  border-radius: 15px;
+  padding-top: 5px;
+}
+
+.mat-slider {
+  width: 90%;
+  left: 5%;
+  position: absolute;
+  bottom: 10px;
+}

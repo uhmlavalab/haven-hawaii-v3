@@ -1,0 +1,25 @@
+<app-menu-blade [menuState]="chartMenuState" [menuItems]="chartItems"> </app-menu-blade>
+<app-menu-blade [menuState]="mapMenuState" [menuItems]="mapItems"> </app-menu-blade>
+<app-menu-blade [menuState]="accountMenuState" [menuItems]="accountItems"> </app-menu-blade>
+
+<img class="logo" src="./assets/logo/havenlogo.png" mat-elevation-z2>
+
+<button mat-mini-fab (click)="addWindow()" color="primary" class="button-4">
+  <mat-icon>add</mat-icon>
+</button>
+
+<button mat-mini-fab (click)="toggleChartMenu()" color="primary" class="button-2">
+  <mat-icon>show_chart</mat-icon>
+</button>
+
+<button mat-mini-fab (click)="toggleMapMenu()" color="primary" class="button-3">
+  <mat-icon>map</mat-icon>
+</button>
+
+<button mat-mini-fab (click)="toggleAccountMenu()" color="primary" class="button-1">
+  <mat-icon>perm_identity</mat-icon>
+</button>
+
+
+
+

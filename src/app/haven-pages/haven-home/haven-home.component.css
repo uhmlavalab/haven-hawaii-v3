@@ -7,8 +7,8 @@
   z-index: -1;
   background-color: #f5f5f5;
   background-size: 120px 120px, 40px 40px;
-  background-image: radial-gradient(circle, gray 1.1px, transparent 1px),
-    radial-gradient(circle, darkgray 1px, transparent 1px);
+  background-image: radial-gradient(circle, gray 1.7px, transparent 2px),
+    radial-gradient(circle, darkgray 1.3px, transparent 1px);
   border-style: dashed;
   border-color: gray;
   cursor: grab;
@@ -22,6 +22,39 @@
 app-haven-dashboard {
   position: absolute;
   top: 100vh;
+}
+
+.zoom-in {
+  right: 10px;
+  bottom: 55px;
+  position: absolute;
+}
+
+.zoom-out {
+  right: 10px;
+  bottom: 10px;
+  position: absolute;
+}
+
+app-scenario-legend{
+  position:absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: gray;
+  border-radius: 15px;
+  padding: 10px 10px 30px 10px;
+  width: fit-content;
+  min-width: 400px;
+  bottom: -20px;
+  background: darkgray;
+}
+
+app-year-selector {
+  position: absolute;
+  left: 50%;
+  bottom: 65px;
+  transform: translate(-50%, 0);
+  width: 500px;
 }
 
 
