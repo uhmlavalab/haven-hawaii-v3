@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { HavenWindowService } from '@app/haven-core';
+import { HavenWindowService } from '../services/haven-window.service';
 import { HavenWindow } from '../shared/haven-window';
 
 @Directive({

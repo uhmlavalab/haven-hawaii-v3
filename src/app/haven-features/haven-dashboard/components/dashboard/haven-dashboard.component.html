@@ -2,9 +2,9 @@
 <app-menu-blade [menuState]="mapMenuState" [menuItems]="mapItems"> </app-menu-blade>
 <app-menu-blade [menuState]="accountMenuState" [menuItems]="accountItems"> </app-menu-blade>
 
-<img class="logo" src="./assets/logo/havenlogo.png" mat-elevation-z2>
+<img class="logo mat-elevation-z8" src="./assets/logo/havenlogo.png" mat-elevation-z2>
 
-<button mat-mini-fab (click)="addWindow()" color="primary" class="button-4">
+<button mat-mini-fab color="primary" (click)="openDialog()" class="button-4">
   <mat-icon>add</mat-icon>
 </button>
 

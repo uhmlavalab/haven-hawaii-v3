@@ -11,6 +11,7 @@ import { HavenWindowDragDirective } from './directives/haven-window-drag.directi
 import { HavenWindowHostDirective } from './directives/haven-window-host.directive';
 import { HavenWindowMaximizeDirective } from './directives/haven-window-maximize.directive';
 import { HavenWindowResizeDirective } from './directives/haven-window-resize.directive';
+import { HavenWindowService } from './services/haven-window.service';
 
 
 @NgModule({
@@ -34,6 +35,9 @@ import { HavenWindowResizeDirective } from './directives/haven-window-resize.dir
   ],
   entryComponents: [
     HavenWindowComponent,
+  ],
+  providers: [
+    HavenWindowService
   ]
 })
 export class HavenWindowModule { }

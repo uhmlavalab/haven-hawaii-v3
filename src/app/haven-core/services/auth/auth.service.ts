@@ -33,6 +33,10 @@ export class AuthService {
     return this.token != null;
   }
 
+  getUserId() {
+    return this.afAuth.auth.currentUser.uid;
+  }
+
   async createAccount(email, password): Promise<string> {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password).then(user => {
       if (user !== null) {

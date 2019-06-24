@@ -1,42 +1,78 @@
-.year-button {
-  width: 100px;
-  height: 100px;
-  left: 50%;
-  transform: translate(-50%, -45%);
-  border-radius: 100%;
-  position:absolute;
-  background: #28608d;
-  z-index: -1;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
+.container {
+  width: 100%;
+  height: 75px;
+  position:relative;
 }
 
-.year-button > p {
-  transform: translate(0, -10px);
+mat-list {
+  width: 100%;
+}
+
+mat-chip {
+  width: 18.5%;
+}
+
+.legend {
+  width: calc(100% - 12px);
+  bottom: 0;
+  position: absolute;
+  background: gray;
+  border-radius: 8px 8px 0 0;
+  padding: 6px;
 }
 
 .year-chart {
   background: gray;
-  width: 100%;
-  height: 200px;
+  width: calc(95% - 12px);
+  height: 215px;
   position: absolute;
-  border-radius: 15px;
+  border-radius: 8px;
   padding: 8px;
+  left: 2.5%;
 }
+
+.year-button {
+  width: 100px;
+  height: 25px;
+  left: 50%;
+  transform: translate(-50%, -125%);
+  border-radius: 8px 8px 0 0;
+  position:absolute;
+  background: #28608d;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.year-button > p {
+  transform: translate(0, -20px);
+}
+
+
 
 .chart {
   width: 100%;
-  height: 100%;
+  height: 205px;
   background: lightgray;
-  border-radius: 15px;
+  border-radius: 8px;
   padding-top: 5px;
+}
+
+.canvas-container {
+  width: 95%;
+  height: 140px;
 }
 
 .mat-slider {
   width: 90%;
   left: 5%;
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
+  z-index: 0;
 }
+
+
+
+

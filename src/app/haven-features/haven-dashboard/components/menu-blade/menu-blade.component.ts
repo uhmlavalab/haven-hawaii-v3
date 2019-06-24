@@ -8,7 +8,7 @@ import { MenuBladeItem } from '../menu-blade-item/menu-blade-item.component';
   styleUrls: ['./menu-blade.component.css'],
   animations: [
     trigger('bladeState', [
-      state('notactive', style({ width: '0px', height: '0px', borderTop: '100px solid darkgray', borderRight: '100px solid darkgray' })),
+      state('notactive', style({ width: '0px', height: '0px', borderTop: '100px solid gray', borderRight: '100px solid gray' })),
       state('active', style({ width: '175px', height: '175px', borderTop: '100px solid #285f8d', borderRight: '100px solid #285f8d' })),
       transition('notactive <=> active', animate('750ms'))
     ]),

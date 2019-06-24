@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HavenWindowService } from '@app/haven-core';
-
-import { HavenWindow } from '../../../haven-window/shared/haven-window';
 
 import { MenuBladeItem } from '../menu-blade-item/menu-blade-item.component';
+
+
+import { HavenNewScenarioService } from '@app/haven-features/haven-scenario';
+
 @Component({
   selector: 'app-haven-dashboard',
   templateUrl: './haven-dashboard.component.html',
@@ -17,9 +18,19 @@ export class HavenDashboardComponent implements OnInit {
   mapMenuState = 'notactive';
   accountMenuState = 'notactive';
 
-  constructor(private windowService: HavenWindowService, ) { }
+  constructor(public newScenarioService: HavenNewScenarioService ) { }
 
   chartItems: MenuBladeItem[] = [
+    {
+      text: 'cow',
+      icon: 'person',
+      click: () => { },
+    },
+    {
+      text: 'cow',
+      icon: 'person',
+      click: () => { },
+    },
     {
       text: 'cow',
       icon: 'person',
@@ -52,14 +63,31 @@ export class HavenDashboardComponent implements OnInit {
       icon: 'person',
       click: () => { },
     },
+
+    {
+      text: 'cow',
+      icon: 'person',
+      click: () => { },
+    },
+    {
+      text: 'cow',
+      icon: 'person',
+      click: () => { },
+    },
+    {
+      text: 'cow',
+      icon: 'person',
+      click: () => { },
+    },
+    {
+      text: 'cow',
+      icon: 'person',
+      click: () => { },
+    },
   ];
 
 
   ngOnInit() {
-  }
-  addWindow() {
-    const havenWindow = new HavenWindow('Test', 'Btm', 100, 100, 400, 400, false);
-    this.windowService.addWindow(havenWindow);
   }
 
   toggleChartMenu() {
@@ -79,4 +107,10 @@ export class HavenDashboardComponent implements OnInit {
     this.mapMenuState = 'notactive';
     this.accountMenuState = (this.accountMenuState === 'active' ? 'notactive' : 'active');
   }
+
+  openDialog () {
+    this.newScenarioService.openDialog();
+  }
+
+
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+
+import { HavenScenarioService } from '@app/haven-features/haven-scenario';
 
 @Component({
   selector: 'app-year-selector',
@@ -7,22 +9,36 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   styleUrls: ['./year-selector.component.css'],
   animations: [
     trigger('toggleMenuAnim', [
-      state('notactive', style({ top: '0px' })),
-      state('active', style({ top: '-185px' })),
+      state('notactive', style({ bottom: '-175px' })),
+      state('active', style({ bottom: '35px' })),
       transition('notactive <=> active', animate('750ms')),
     ])
   ],
 })
-export class YearSelectorComponent implements OnInit {
+export class YearSelectorComponent  {
 
   year = 2030;
   menuState = 'notactive';
   @ViewChild('lineDiv', { static: true }) chartDiv: ElementRef;
+  @ViewChild('canvasContainer', { static: true }) canvasContainer: ElementRef;
+
   ctx: any;
   myChart: any;
-  constructor() { }
 
-  ngOnInit() {
+  labels = [];
+  dataSets = [];
+
+  constructor(private scenarioService: HavenScenarioService) {
+    this.scenarioService.renewablePercentSubject.subscribe(value => {
+      value.forEach(el => {
+        this.labels = this.createYears();
+        this.dataSets.push(this.createDataSet(el));
+      });
+      this.createChart();
+    });
+  }
+
+  createChart() {
     this.ctx = this.chartDiv.nativeElement.getContext('2d');
     this.myChart = new Chart(this.ctx, {
       type: 'line',
@@ -32,27 +48,27 @@ export class YearSelectorComponent implements OnInit {
         },
         scales: {
           xAxes: [{
-            display: true,
+            display: false,
             gridLines: {
               display: false,
-              color: '#FFFFFF',
+              color: 'gray',
             },
             ticks: {
               fontSize: 16,
               fontStyle: 'bold',
-              fontColor: 'white',
+              fontColor: 'gray',
             },
           }],
           yAxes: [{
             display: true,
             gridLines: {
               display: true,
-              color: '#FFFFFF',
+              color: 'gray',
             },
             ticks: {
               fontSize: 12,
               fontStyle: 'bold',
-              fontColor: 'white',
+              fontColor: 'gray',
             }
           }]
         },
@@ -64,52 +80,16 @@ export class YearSelectorComponent implements OnInit {
               mode: 'vertical',
               scaleID: 'x-axis-0',
               value: this.year,
-              borderWidth: 3,
-              borderColor: 'white',
-              borderDash: [5, 5],
+              borderWidth: 4,
+              borderColor: '#b95246',
+              borderDash: [8, 8],
             }
           ]
         },
       },
       data: {
-        labels: this.createYears(),
-        datasets: [
-          {
-            label: 'E3GenMod',
-            data: this.createDataSet(),
-            showLine: true,
-            fill: false,
-            backgroundColor: '#21897E'
-          },
-          {
-            label: 'PostApril',
-            data: this.createDataSet(),
-            showLine: true,
-            fill: false,
-            backgroundColor: '#5386E4'
-          },
-          {
-            label: 'E3',
-            data: this.createDataSet(),
-            showLine: true,
-            fill: false,
-            backgroundColor: '#88498F'
-          },
-          {
-            label: 'Maui',
-            data: this.createDataSet(),
-            showLine: true,
-            fill: false,
-            backgroundColor: '#DD6E42'
-          },
-          {
-            label: 'Big Island',
-            data: this.createDataSet(),
-            showLine: true,
-            fill: false,
-            backgroundColor: '#6C698D'
-          }
-        ]
+        labels: this.labels,
+        datasets: this.dataSets
 
       },
     });
@@ -121,29 +101,42 @@ export class YearSelectorComponent implements OnInit {
 
   createYears() {
     const data = [];
-    for (let i = 2016; i < 2045; i++) {
+    for (let i = 2016; i < 2046; i++) {
       data.push(i);
     }
     return data;
   }
 
 
-  createDataSet() {
+  createDataSet(set: any) {
     const data = [];
-    let yVal = 0.0;
-    const yValScale = Math.random() * 0.2;
-    for (let i = 2016; i < 2045; i++) {
-      yVal += Math.random() * yValScale;
-      yVal = Math.min(1, yVal);
-      data.push(yVal * 100);
-    }
-    return data;
+    set.percents.forEach(el => {
+      data.push(el.percent * 100);
+    })
+    const dataset = {
+      label: set.scenarioData.name,
+      data,
+      backgroundColor: set.scenarioData.color,
+      showLine: true,
+      fill: false,
+      pointRadius: 2,
+      borderWidth: 3,
+      borderColor: set.scenarioData.color
+    };
+    return dataset;
   }
 
   yearChange(event: any) {
     this.year = event.value;
     this.myChart.options.annotation.annotations[0].value = this.year;
     this.myChart.update();
+  }
+
+  setValue(labelName: string) {
+    const dataSet = this.dataSets.find((el) => el.label === labelName );
+    const idx = this.labels.indexOf(this.year);
+    const value = dataSet.data[idx];;
+    return Math.floor(value);
   }
 
 }

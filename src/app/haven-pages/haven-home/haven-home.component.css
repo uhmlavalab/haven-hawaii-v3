@@ -36,25 +36,13 @@ app-haven-dashboard {
   position: absolute;
 }
 
-app-scenario-legend{
-  position:absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  background: gray;
-  border-radius: 15px;
-  padding: 10px 10px 30px 10px;
-  width: fit-content;
-  min-width: 400px;
-  bottom: -20px;
-  background: darkgray;
-}
 
 app-year-selector {
   position: absolute;
+  bottom: 0px;
   left: 50%;
-  bottom: 65px;
   transform: translate(-50%, 0);
-  width: 500px;
+  width: 700px;
 }
 
 

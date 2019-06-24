@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { HavenWindow } from '../shared/haven-window';
+import { HavenWindowService } from '../services/haven-window.service';
 
 @Directive({
   selector: '[appHavenWindowDrag]'
@@ -17,13 +18,13 @@ export class HavenWindowDragDirective {
   private startWindowLeft: number;
   private startWindowTop: number;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private windowService: HavenWindowService) { }
 
   @HostListener('mousedown', ['$event']) onMouseDown(event) {
     this.dragStartLeft = event.clientX;
     this.dragStartTop =  event.clientY;
-    this.startWindowLeft = this.havenWindow.position.left;
-    this.startWindowTop = this.havenWindow.position.top;
+    this.startWindowLeft = this.havenWindow.left;
+    this.startWindowTop = this.havenWindow.top;
     this.dragbarSelected = true;
     event.stopPropagation();
   }
@@ -35,10 +36,10 @@ export class HavenWindowDragDirective {
 
   @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
     if (this.dragbarSelected === true) {
-      this.havenWindow.position.left = Math.max(0, this.startWindowLeft + (event.clientX - this.dragStartLeft));
-      this.havenWindow.position.top = Math.max(0, this.startWindowTop + (event.clientY - this.dragStartTop));
-      this.windowDiv.style.left = this.havenWindow.position.left + 'px';
-      this.windowDiv.style.top = this.havenWindow.position.top + 'px';
+      this.havenWindow.left = Math.max(0, this.startWindowLeft + (event.clientX - this.dragStartLeft));
+      this.havenWindow.top = Math.max(0, this.startWindowTop + (event.clientY - this.dragStartTop));
+      this.windowDiv.style.left = this.havenWindow.left + 'px';
+      this.windowDiv.style.top = this.havenWindow.top + 'px';
       event.stopPropagation();
     }
   }

@@ -6,12 +6,12 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 
 import { environment } from '../../environments/environment';
 
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { AuthService } from './services/auth/auth.service';
-import { HavenWindowService } from './services/windows/haven-window.service';
 
 
 @NgModule({
@@ -22,12 +22,12 @@ import { HavenWindowService } from './services/windows/haven-window.service';
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    AngularFireFunctionsModule
   ],
   providers: [
     AuthGuard,
     AuthService,
-    HavenWindowService,
   ]
 })
 export class HavenCoreModule {

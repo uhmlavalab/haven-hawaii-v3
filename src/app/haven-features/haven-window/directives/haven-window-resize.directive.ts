@@ -9,6 +9,8 @@ export class HavenWindowResizeDirective {
 
   @Input() windowDiv: any;
   @Input() havenWindow: HavenWindow;
+  @Input() titleDiv: any;
+  @Input() menuDiv: any;
 
   private resizeSelected: boolean;
 
@@ -23,8 +25,8 @@ export class HavenWindowResizeDirective {
   @HostListener('mousedown', ['$event']) onMouseDown(event) {
     this.resizeStartLeft = event.clientX;
     this.resizeStartTop =  event.clientY;
-    this.startWindowWidth = this.havenWindow.size.width;
-    this.startWindowHeight = this.havenWindow.size.height;
+    this.startWindowWidth = this.havenWindow.width;
+    this.startWindowHeight = this.havenWindow.height;
     this.resizeSelected = true;
     event.stopPropagation();
   }
@@ -35,10 +37,12 @@ export class HavenWindowResizeDirective {
 
   @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
     if (this.resizeSelected === true) {
-      this.havenWindow.size.width = Math.max(350, this.startWindowWidth + (event.clientX - this.resizeStartLeft));
-      this.havenWindow.size.height = Math.max(350, this.startWindowHeight + (event.clientY - this.resizeStartTop));
-      this.windowDiv.style.width = this.havenWindow.size.width + 'px';
-      this.windowDiv.style.height = this.havenWindow.size.height + 'px';
+      this.havenWindow.width = Math.max(400, this.startWindowWidth + (event.clientX - this.resizeStartLeft));
+      this.havenWindow.height = Math.max(400, this.startWindowHeight + (event.clientY - this.resizeStartTop));
+      this.windowDiv.style.width = this.havenWindow.width + 'px';
+      this.windowDiv.style.height = this.havenWindow.height + 'px';
+      this.titleDiv.style.width = this.windowDiv.style.width;
+      this.menuDiv.style.width = this.havenWindow.width - 25 + 'px';
       event.stopPropagation();
     }
   }

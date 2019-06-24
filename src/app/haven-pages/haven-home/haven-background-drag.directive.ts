@@ -1,12 +1,14 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 
 
 @Directive({
   selector: '[appHavenBackgroundDrag]'
 })
-export class HavenBackgroundDragDirective {
+export class HavenBackgroundDragDirective implements OnInit {
 
   @Input() background: any;
+  @Input() zoomIn: any;
+  @Input() zoomOut: any;
 
   private dragging: boolean;
 
@@ -18,7 +20,27 @@ export class HavenBackgroundDragDirective {
 
   private zoom = 1;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {
+  }
+
+  ngOnInit() {
+    this.zoomIn._elementRef.nativeElement.addEventListener('click', () => {
+      let delta = -0.1;
+      (Math.sign(delta) < 0) ? delta = 0.1 : delta = -0.1;
+      this.zoom += delta;
+      (this.zoom <= 0) ? this.zoom = 0.1 : this.zoom = this.zoom;
+      this.background.style.zoom = this.zoom;
+    });
+
+    this.zoomOut._elementRef.nativeElement.addEventListener('click', () => {
+      let delta = 0.1;
+      (Math.sign(delta) < 0) ? delta = 0.1 : delta = -0.1;
+      this.zoom += delta;
+      (this.zoom <= 0) ? this.zoom = 0.1 : this.zoom = this.zoom;
+      this.background.style.zoom = this.zoom;
+    });
+
+  }
 
   @HostListener('mousedown', ['$event']) onMouseDown(event) {
     this.dragStartLeft = event.clientX;
@@ -43,12 +65,5 @@ export class HavenBackgroundDragDirective {
     }
   }
 
-  @HostListener('wheel', ['$event']) onMouseWheel(event) {
-    let delta = 0;
-    (Math.sign(event.deltaY) < 0) ? delta = 0.1 : delta = -0.1;
-    this.zoom += delta;
-    (this.zoom <= 0) ? this.zoom = 0.1 : this.zoom = this.zoom;
-    this.background.style.zoom = this.zoom;
-  }
 
 }

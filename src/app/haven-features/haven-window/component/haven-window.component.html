@@ -1,11 +1,39 @@
 <div #windowDiv class="window" style="position:absolute;" appHavenWindowBringforward [havenWindow]="havenWindow">
 
-  <div class="app-container" #chartDiv>
+  <div class="app-container mat-elevation-z8" #chartDi [ngStyle]="{'border-color': selectedColor}">
     <div style="height: 100%;" leaflet (leafletMapReady)="setMap($event)" [leafletOptions]="options">
     </div>
   </div>
-  <div class="handle" appHavenWindowDrag [windowDiv]="windowDiv" [havenWindow]="havenWindow">3</div>
-  <div class="resize-handle" appHavenWindowResize [windowDiv]="windowDiv" [havenWindow]="havenWindow"></div>
+  <div class="title mat-elevation-z8" #title appHavenWindowDrag
+    [ngStyle]="{'background': selectedColor, 'color': 'white', 'border-color': selectedColor}" [windowDiv]="windowDiv"
+    [havenWindow]="havenWindow">
+
+    <mat-icon matTooltip="Open Menu"
+      style="background: teal;  cursor: pointer;float:left;border-radius: 100%; margin: 4px; border: 2px solid white; height: 20px; width: 20px;"
+      (click)="toggleMenu()">
+    </mat-icon>
+
+    Post April - 2030 - {{rpsPercent}}%
+
+    <mat-icon matTooltip="Close"
+      style="background: #ef3030; cursor: pointer;float:right;border-radius: 100%;  margin: 4px; border: 2px solid white; height: 20px; width: 20px;"
+      (click)="removeWindow()">
+    </mat-icon>
+    <mat-icon matTooltip="Maximize"
+      style="background: #1eb01e;  cursor: pointer;float:right;border-radius: 100%; margin: 4px; border: 2px solid white; height: 20px; width: 20px;">
+    </mat-icon>
+    <mat-icon matTooltip="Minimize"
+      style="background: #e1c428; cursor: pointer; float:right; margin: 4px; border: 2px solid white; border-radius: 100%; height: 20px; width: 20px;">
+    </mat-icon>
+
+  </div>
+
+
+  <div class="resize-handle" appHavenWindowResize [windowDiv]="windowDiv" [havenWindow]="havenWindow" [titleDiv]="title"
+    [menuDiv]="menu"></div>
+
+  <div class="window-menu mat-elevation-z8" #menu [ngStyle]="{'color': selectedColor, 'border-color': selectedColor}"
+    [@menuOpen]="menuState">
+
+  </div>
 </div>
-
-

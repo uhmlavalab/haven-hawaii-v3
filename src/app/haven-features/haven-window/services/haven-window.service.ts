@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HavenWindow } from '../../../haven-features/haven-window/shared/haven-window';
+import { HavenWindow } from '@app/haven-features/haven-window';
+
+import { AuthService } from '@app/haven-core';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Subject } from 'rxjs';
 
@@ -16,13 +19,16 @@ export class HavenWindowService {
 
   numberOfWindows = 0;
 
-  constructor() {}
+  currentZoom = 0;
+
+
+  constructor(private authService: AuthService, private afStore: AngularFirestore) { }
 
   getWindows(): Promise<HavenWindow[]> {
     return Promise.resolve(this.windows);
   }
 
-  removeWindow(wId) {
+  removeWindow(wId: string) {
     for (let i = this.windows.length - 1; i >= 0; i--) {
       if (this.windows[i].id === wId) {
         this.HavenWindowRemove.next(this.windows[i]);
@@ -33,7 +39,7 @@ export class HavenWindowService {
   }
 
   addWindow(win: HavenWindow) {
-    win.id = this.numberOfWindows;
+    win.id = this.afStore.createId();
     this.numberOfWindows++;
     this.windows.push(win);
     this.HavenWindowAdd.next(win);
@@ -49,7 +55,7 @@ export class HavenWindowService {
     });
   }
 
-  getWindow(wId: number): Promise<HavenWindow> {
+  getWindow(wId: string): Promise<HavenWindow> {
     for (let i = this.windows.length - 1; i >= 0; i--) {
       if (this.windows[i].id === wId) { return Promise.resolve(this.windows[i]); }
     }
@@ -63,7 +69,7 @@ export class HavenWindowService {
     this.windows.length = 0;
   }
 
-  bringWindowForward(windowId: number) {
+  bringWindowForward(windowId: string) {
     const winZ = this.windowsZIndex[windowId];
     for (const winId in this.windowsZIndex) {
       if (this.windowsZIndex[winId] > winZ) {
@@ -74,12 +80,12 @@ export class HavenWindowService {
     this.WindowZUpdate.next(this.windowsZIndex);
   }
 
-  addZWindow(windowId: number) {
+  addZWindow(windowId: string) {
     this.windowsZIndex[windowId] = this.windows.length;
     this.WindowZUpdate.next(this.windowsZIndex);
   }
 
-  removeZWindow(windowId: number) {
+  removeZWindow(windowId: string) {
     const winZ = this.windowsZIndex[windowId];
     delete this.windowsZIndex[windowId];
     for (const winId in this.windowsZIndex) {

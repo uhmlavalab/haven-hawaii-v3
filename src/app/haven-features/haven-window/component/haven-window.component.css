@@ -2,37 +2,36 @@
 
 .window{
   position: absolute;
-  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.09),
-              4px 4px 3px 1px rgba(0, 0, 0, 0.1),
-              2px 2px 10px 5px rgba(0, 0, 0, 0.1);
-
 }
 
 .app-container {
-  border-radius: 20px;
+  border-radius: 8px 8px 0 0;
   overflow:hidden;
-  border: 3px #28608d solid;
+  border: 4px #28608d solid;
   height: 100%;
   width: 100%;
 }
 
-.handle {
+
+.title {
   user-select: none;
-  height: 65px;
-  width: 65px;
+  height: 30px;
+  width: 400px;
   position: absolute;
-  bottom: -18px;
-  left: -19px;
+  bottom: -40px;
+  left: 0px;
   z-index: 1000;
   background-color: white;
-  border: 5px #28608d solid;
-  border-radius: 50%;
-  display: inline-block;
-  line-height: 65px;
-  font-size: 36px;
+  border-left: 4px;
+  border-right: 4px;
+  border-bottom: 4px;
+  border-style: solid;
+  border: inline-block;
+  line-height: 30px;
+  font-size: 24px;
   font-weight: bold;
-  text-align: center;
-  color: #28608d;
+  border-radius: 0 0 8px 8px;
+
 }
 
 .resize-handle {
@@ -40,11 +39,25 @@
   height: 30px;
   width: 30px;
   position: absolute;
-  bottom: -15px;
-  right: -15px;
+  bottom: -60px;
+  right: -30px;
   z-index: 1000;
   background-color: transparent;
   border-radius: 50%;
   display: inline-block;
   cursor: se-resize;
 }
+
+
+.window-menu {
+  width: 375px;
+  left: 10px;
+  height: 200px;
+  bottom: 0px;
+  background: lightgray;
+  position: absolute;
+  border: 5px solid;
+  z-index: -1;
+  border-radius: 8px;
+}
+

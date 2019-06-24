@@ -1,18 +1,15 @@
-<div #background class="background" appHavenBackgroundDrag [background]="background">
+<div #background class="background" appHavenBackgroundDrag [background]="background" [zoomIn]="zoomin" [zoomOut]="zoomout">
   <app-haven-window-factory></app-haven-window-factory>
 </div>
 
 <app-haven-dashboard></app-haven-dashboard>
 
-<button mat-mini-fab color="primary" class="zoom-in">
+<button mat-mini-fab color="primary" class="zoom-in" #zoomin>
   <mat-icon>add</mat-icon>
 </button>
 
-<button mat-mini-fab color="primary" class="zoom-out">
+<button mat-mini-fab color="primary" class="zoom-out" #zoomout>
   <mat-icon>remove</mat-icon>
 </button>
 
-
-
-<app-year-selector class="mat-elevation-z8"></app-year-selector>
-<app-scenario-legend class="mat-elevation-z8"></app-scenario-legend>
+<app-year-selector></app-year-selector>

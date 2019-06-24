@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ComponentFactoryResolver, ComponentRef } 
 
 import { HavenWindowHostDirective } from '../directives/haven-window-host.directive';
 
-import { HavenWindowService } from '@app/haven-core';
+import { HavenWindowService } from '../services/haven-window.service';
 import { HavenWindowComponent } from '../component/haven-window.component';
 import { HavenWindow } from '../shared/haven-window';
 
