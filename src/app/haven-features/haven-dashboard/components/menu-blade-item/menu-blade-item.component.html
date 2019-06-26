@@ -1,5 +1,5 @@
-<button mat-mini-fab
-  color="warn"
-  [@buttonState]="{value: menuState, params: {left: button.left, bottom: button.bottom}}">
-  <mat-icon matTooltip="button.text">{{ button.icon }}</mat-icon>
+<button mat-mini-fab [matTooltip]="button.text" matTooltipPosition="right" (click)="button.click()"
+color="warn"
+[@buttonState]="{value: menuState, params: {left: button.left, bottom: button.bottom}}">
+<mat-icon>{{ button.icon }}</mat-icon>
 </button>

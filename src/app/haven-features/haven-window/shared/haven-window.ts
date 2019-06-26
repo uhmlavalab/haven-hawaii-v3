@@ -1,12 +1,11 @@
-export enum AppType {
-  plotly = 'plotly',
-  map = 'leaflet'
-}
+
+import { AppType } from '@app/haven-features/haven-apps';
+import { Scenario } from '@app/haven-features/haven-scenario';
 
 export class HavenWindow {
 
   id: string;
-  title: string;
+  name: string;
   color: string;
 
   width: number;
@@ -16,6 +15,7 @@ export class HavenWindow {
   zindex: number;
 
   appType: AppType;
+  query: {scenario: Scenario, data: any}
 
 }
 

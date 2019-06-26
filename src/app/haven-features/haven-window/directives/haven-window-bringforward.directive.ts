@@ -11,7 +11,8 @@ export class HavenWindowBringforwardDirective {
 
   constructor(private el: ElementRef, private windowService: HavenWindowService) { }
 
-  @HostListener('mousedown') onMouseDown() {
+  @HostListener('mousedown', ['$event']) onMouseDown(event) {
     this.windowService.bringWindowForward(this.havenWindow.id);
+    event.stopPropagation();
   }
 }

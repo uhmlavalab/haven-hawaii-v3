@@ -26,6 +26,7 @@ export class HavenWindowDragDirective {
     this.startWindowLeft = this.havenWindow.left;
     this.startWindowTop = this.havenWindow.top;
     this.dragbarSelected = true;
+    this.windowService.bringWindowForward(this.havenWindow.id);
     event.stopPropagation();
   }
 

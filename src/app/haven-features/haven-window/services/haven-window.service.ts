@@ -1,11 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HavenWindow } from '@app/haven-features/haven-window';
+import { HavenWindow } from '../shared/haven-window';
 
+import { AppType } from '@app/haven-features/haven-apps';
 import { AuthService } from '@app/haven-core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Subject } from 'rxjs';
+import { Scenario } from '@app/haven-features/haven-scenario';
 
+export enum ChartType {
+  'capacity',
+  'load',
+  'generation'
+}
+
+export enum MapType {
+  'satellite',
+  'street',
+  'terrain'
+}
 
 @Injectable()
 export class HavenWindowService {
@@ -17,12 +30,12 @@ export class HavenWindowService {
   HavenWindowAdd = new Subject<HavenWindow>();
   HavenWindowRemove = new Subject<HavenWindow>();
 
-  numberOfWindows = 0;
-
   currentZoom = 0;
 
+  constructor(private authService: AuthService, private afStore: AngularFirestore) {
 
-  constructor(private authService: AuthService, private afStore: AngularFirestore) { }
+  }
+
 
   getWindows(): Promise<HavenWindow[]> {
     return Promise.resolve(this.windows);
@@ -39,8 +52,6 @@ export class HavenWindowService {
   }
 
   addWindow(win: HavenWindow) {
-    win.id = this.afStore.createId();
-    this.numberOfWindows++;
     this.windows.push(win);
     this.HavenWindowAdd.next(win);
     this.addZWindow(win.id);
@@ -94,6 +105,34 @@ export class HavenWindowService {
       }
     }
     this.WindowZUpdate.next(this.windowsZIndex);
+  }
+
+  createChart(type: ChartType, scenario: Scenario) {
+    const window = new HavenWindow();
+    window.height = 400;
+    window.width = 400;
+    window.left = 200;
+    window.top = 200;
+    window.color = scenario.color,
+      window.name = scenario.name,
+      window.id = this.afStore.createId();
+    window.appType = AppType.plotly;
+    window.query = { scenario,  data: { year: 2030, type }};
+    this.addWindow(window);
+  }
+
+  createMap(type: MapType, scenario: Scenario) {
+    const window = new HavenWindow();
+    window.height = 400;
+    window.width = 400;
+    window.left = 200;
+    window.top = 200;
+    window.color = scenario.color,
+      window.name = scenario.name,
+      window.id = this.afStore.createId();
+    window.appType = AppType.leaflet;
+    window.query = { scenario, data: { year: 203, type}};
+    this.addWindow(window);
   }
 
 }

@@ -68,28 +68,28 @@ function downloadFileFromBucket(bucketName: string, fileName: string, filePath: 
 
 }
 
-// key - id, location, technology, name
-// generation - year, hour, ....names
-// capacity - technology, year, scenario, value
+// key - technology, name, renewable
+// generation - time ....names
+// capacity - technology, year, capacity
 function parseScenarioData(scenarioData: any, uid: string, scenarioId: string): Promise<any> {
   const stations = {} as any;
   const generation = {} as any;
   const capacity = {} as any;
   const renewablepercent = {} as any;
   return new Promise((resolve, error) => {
-    scenarioData.stationData.forEach((stationEl: any) => {
-      const renewable = (stationEl.technology === 'fossil' || stationEl.technology === 'demand') ? false : true;
-      stations[stationEl.name] = { 'name': stationEl.name, 'technology': stationEl.technology, 'renewable': renewable };
+    scenarioData.stationData.forEach((station: any) => {
+      const renewable = (station.renewable === 'TRUE') ? true : false;
+      stations[station.name] = { 'name': station.name, 'technology': station.technology, 'renewable': renewable };
     });
     return updateProgress(40, uid, scenarioId).then(() => {
       scenarioData.genData.forEach((genEl: any) => {
-        const date = new Date(genEl.hour);
+        const date = new Date(genEl.time);
         const year = date.getFullYear();
         const month = date.getMonth();
         const day = date.getDate();
         const hour = date.getHours();
         Object.keys(genEl).forEach(el => {
-          if (el === 'year' || el === 'hour') return;
+          if (el === 'time') return;
           if (!stations.hasOwnProperty(el)) return;
           const technology = stations[el].technology;
           if (!generation.hasOwnProperty(year)) generation[year] = {};
@@ -99,7 +99,7 @@ function parseScenarioData(scenarioData: any, uid: string, scenarioId: string): 
           if (!generation[year][month][day][hour].hasOwnProperty(technology)) generation[year][month][day][hour][technology] = 0;
           generation[year][month][day][hour][technology] += Number(genEl[el]);
 
-          if (technology === 'demand') return;
+          if (technology === 'Demand' || technology === 'demand') return;
           if (!renewablepercent.hasOwnProperty(year)) renewablepercent[year] = { renewableEnergy: 0, nonRenewableEnergy: 0 };
           (stations[el].renewable) ? renewablepercent[year].renewableEnergy += Number(genEl[el]) : renewablepercent[year].nonRenewableEnergy += Number(genEl[el])
         })
@@ -112,7 +112,7 @@ function parseScenarioData(scenarioData: any, uid: string, scenarioId: string): 
         scenarioData.capData.forEach((capEl: any) => {
           const technology = capEl.technology;
           const year = capEl.year;
-          const capValue = Number(capEl.value);
+          const capValue = Number(capEl.capacity);
           if (!capacity.hasOwnProperty(year)) capacity[year] = {};
           if (!capacity[year].hasOwnProperty(technology)) capacity[year][technology] = 0;
           capacity[year][technology] += capValue;

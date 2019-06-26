@@ -8,9 +8,6 @@ mat-list {
   width: 100%;
 }
 
-mat-chip {
-  width: 18.5%;
-}
 
 .legend {
   width: calc(100% - 12px);
@@ -73,6 +70,12 @@ mat-chip {
   z-index: 0;
 }
 
+.mat-icon {
+  cursor: pointer;
+}
 
+.scenario-selected {
+  border: 4px lightgray solid;
+}
 
 

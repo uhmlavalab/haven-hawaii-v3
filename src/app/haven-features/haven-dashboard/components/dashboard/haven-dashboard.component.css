@@ -8,29 +8,7 @@
   z-index: 1000;
 }
 
-
-.button-1 {
-  left: 110.82px;
-  bottom: 22.04px;
+.mat-mini-fab {
   position: absolute;
 }
-
-.button-2 {
-  left: 93.95px;
-  bottom: 62.77px;
-  position: absolute;
-}
-
-.button-3 {
-  left: 62.77px;
-  bottom: 93.95px;
-  position: absolute;
-}
-
-.button-4 {
-  left: 22.04px;
-  bottom: 110.82px;
-  position: absolute;
-}
-
 

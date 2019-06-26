@@ -1,7 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
-import { HavenScenarioService } from '@app/haven-features/haven-scenario';
+import { HavenScenarioService, RenewablePercents, Scenario } from '@app/haven-features/haven-scenario';
+
+import { HavenConfigureScenarioService } from '@app/haven-features/haven-scenario';
 
 @Component({
   selector: 'app-year-selector',
@@ -15,7 +17,7 @@ import { HavenScenarioService } from '@app/haven-features/haven-scenario';
     ])
   ],
 })
-export class YearSelectorComponent  {
+export class YearSelectorComponent implements OnInit {
 
   year = 2030;
   menuState = 'notactive';
@@ -27,19 +29,31 @@ export class YearSelectorComponent  {
 
   labels = [];
   dataSets = [];
+  scenarios: Scenario[] = [];
+  selectedScenario: string = '';
 
-  constructor(private scenarioService: HavenScenarioService) {
+  constructor(private scenarioService: HavenScenarioService, private configureScenarioService: HavenConfigureScenarioService) {
+
+  }
+
+  ngOnInit(): void {
     this.scenarioService.renewablePercentSubject.subscribe(value => {
+      this.labels = [];
+      this.dataSets = [];
+      this.scenarios = [];
       value.forEach(el => {
+        this.scenarios.push(el.scenarioInfo);
         this.labels = this.createYears();
         this.dataSets.push(this.createDataSet(el));
       });
       this.createChart();
     });
+
   }
 
   createChart() {
     this.ctx = this.chartDiv.nativeElement.getContext('2d');
+    if (this.myChart) this.myChart.destroy();
     this.myChart = new Chart(this.ctx, {
       type: 'line',
       options: {
@@ -108,20 +122,21 @@ export class YearSelectorComponent  {
   }
 
 
-  createDataSet(set: any) {
+  createDataSet(set: RenewablePercents) {
     const data = [];
     set.percents.forEach(el => {
       data.push(el.percent * 100);
     })
     const dataset = {
-      label: set.scenarioData.name,
+      label: set.scenarioInfo.name,
       data,
-      backgroundColor: set.scenarioData.color,
+      backgroundColor: set.scenarioInfo.color,
       showLine: true,
       fill: false,
       pointRadius: 2,
       borderWidth: 3,
-      borderColor: set.scenarioData.color
+      borderColor: set.scenarioInfo.color,
+      id: set.scenarioInfo.id
     };
     return dataset;
   }
@@ -133,10 +148,18 @@ export class YearSelectorComponent  {
   }
 
   setValue(labelName: string) {
-    const dataSet = this.dataSets.find((el) => el.label === labelName );
+    const dataSet = this.dataSets.find((el) => el.label === labelName);
     const idx = this.labels.indexOf(this.year);
-    const value = dataSet.data[idx];;
+    const value = dataSet.data[idx];
     return Math.floor(value);
+  }
+
+  configureScenario(scenarioId: string) {
+    this.configureScenarioService.openDialog(this.scenarios.find(el => el.id === scenarioId) as Scenario);
+  }
+  selectScenario(scenarioId: string) {
+    this.selectedScenario = scenarioId;
+    this.scenarioService.setSelectedScenario(scenarioId);
   }
 
 }

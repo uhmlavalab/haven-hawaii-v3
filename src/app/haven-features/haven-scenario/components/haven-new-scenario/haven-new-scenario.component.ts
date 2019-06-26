@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from '../haven-configure-scenario/haven-configure-scenario.component';
-import { Scenario } from '../../shared/scenario';
+import { Scenario } from '../../services/haven-scenario.service';
 
 
 @Component({

@@ -29,7 +29,8 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.bundle.min.js",
-              "node_modules/chartjs-plugin-annotation/chartjs-plugin-annotation.min.js"
+              "node_modules/chartjs-plugin-annotation/chartjs-plugin-annotation.min.js",
+              "node_modules/plotly.js/dist/plotly.min.js"
             ]
           },
           "configurations": {

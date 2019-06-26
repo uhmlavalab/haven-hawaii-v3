@@ -3,10 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { routes } from './app.routes';
 
-
 import { AppComponent } from './app.component';
-
-
 
 import { HavenCoreModule } from '@app/haven-core';
 import { HavenSharedModule } from '@app/haven-shared';

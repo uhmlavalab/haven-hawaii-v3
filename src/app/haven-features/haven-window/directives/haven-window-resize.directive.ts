@@ -1,6 +1,7 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, ViewChild, } from '@angular/core';
 
 import { HavenWindow } from '../shared/haven-window';
+import { AppFactoryComponent } from '@app/haven-features/haven-apps';
 
 @Directive({
   selector: '[appHavenWindowResize]'
@@ -11,6 +12,7 @@ export class HavenWindowResizeDirective {
   @Input() havenWindow: HavenWindow;
   @Input() titleDiv: any;
   @Input() menuDiv: any;
+  @Input() appDiv: any;
 
   private resizeSelected: boolean;
 
@@ -24,7 +26,7 @@ export class HavenWindowResizeDirective {
 
   @HostListener('mousedown', ['$event']) onMouseDown(event) {
     this.resizeStartLeft = event.clientX;
-    this.resizeStartTop =  event.clientY;
+    this.resizeStartTop = event.clientY;
     this.startWindowWidth = this.havenWindow.width;
     this.startWindowHeight = this.havenWindow.height;
     this.resizeSelected = true;
@@ -43,6 +45,7 @@ export class HavenWindowResizeDirective {
       this.windowDiv.style.height = this.havenWindow.height + 'px';
       this.titleDiv.style.width = this.windowDiv.style.width;
       this.menuDiv.style.width = this.havenWindow.width - 25 + 'px';
+      this.appDiv.resize();
       event.stopPropagation();
     }
   }

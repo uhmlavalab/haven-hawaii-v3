@@ -1,0 +1,9 @@
+<div class="container">
+  <div #chart [hidden]="!loaded" class="chart">
+    <!-- Chart will appear here -->
+  </div>
+  <div *ngIf="!loaded" class="image">
+    <img class="loading-image" src="./assets/logo/haven-animation.gif">
+  </div>
+
+</div>

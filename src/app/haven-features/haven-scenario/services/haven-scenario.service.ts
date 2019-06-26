@@ -2,59 +2,108 @@ import { Injectable } from '@angular/core';
 
 import * as firebase from 'firebase';
 import { AuthService } from '@app/haven-core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
+export class RenewablePercents {
+  scenarioInfo: Scenario;
+  percents: { year: number, percent: number }[];
+}
+
+export interface Scenario {
+  id: string;
+  name: string;
+  endYear: number;
+  startYear: number;
+  creationDate: firebase.firestore.Timestamp | firebase.firestore.FieldValue;
+  lastUpdate: firebase.firestore.Timestamp | firebase.firestore.FieldValue;
+  color: string;
+  latitude: number;
+  longitude: number;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HavenScenarioService {
 
-  scenarios: any[] = [];
-  renewablePercents: any[] = [];
-  renewablePercentSubject = new Subject<any[]>();
+  private availableScenarios: Scenario[] = [];
+  public availableScenariosSubject = new BehaviorSubject<Scenario[]>(this.availableScenarios);
 
-  constructor(private authService: AuthService, private afStore: AngularFirestore) {
-    this.getScenarios().then(() => {
-      this.getRenewablePercents().then(() => {
-        this.renewablePercentSubject.next(this.renewablePercents);
-      });
-    });
+  private activeScenarios: Scenario[] = [];
+  public activeScenariosSubject = new BehaviorSubject<Scenario[]>(this.activeScenarios);
+
+  private renewablePercents: RenewablePercents[] = [];
+  public renewablePercentSubject = new BehaviorSubject<RenewablePercents[]>(this.renewablePercents);
+
+  private selectedScenario: string = '';
+
+  constructor(private authService: AuthService) {
+    this.getAvailableScenarios();
+
   }
 
-  getScenario(scenaroId: string): Observable<any> {
-    return this.afStore.collection('users').doc(this.authService.getUserId()).collection('scenarios').doc(scenaroId).valueChanges();
-  }
-
-  getAllScenarios(): Observable<any> {
-    return this.afStore.collection('users').doc(this.authService.getUserId()).collection('scenarios').valueChanges();
-  }
-
-  getScenarios(): Promise<any> {
-    return firebase.firestore().collection(`users/${this.authService.getUserId()}/scenarios`).get().then(querySnapshot => {
+  private getAvailableScenarios() {
+    firebase.firestore().collection(`users/${this.authService.getUserId()}/scenarios`).onSnapshot(querySnapshot => {
+      this.availableScenarios = [];
       querySnapshot.forEach(doc => {
-        this.scenarios.push(doc.data());
+        this.availableScenarios.push(doc.data() as Scenario);
       });
-      return Promise.resolve(true);
+      this.availableScenariosSubject.next(this.availableScenarios);
+      this.updateRenewable();
     });
   }
 
-  getRenewablePercents(): Promise<any> {
+  public addScenarioToActive(scenarioId: string) {
+    const scenario = this.availableScenarios.find(el => el.id === scenarioId);
+    if (scenario) {
+      this.activeScenarios.push(scenario);
+    }
+    this.activeScenariosSubject.next(this.activeScenarios);
+  }
+
+  public removeScenarioFromActive(scenarioId: string) {
+    const scenario = this.activeScenarios.find(el => el.id === scenarioId);
+    if (scenario) {
+      this.activeScenarios = this.activeScenarios.filter((el) => el.id !== scenario.id);
+    }
+    this.activeScenariosSubject.next(this.activeScenarios);
+  }
+
+  public getScenario(scenarioId: string): Scenario {
+    return this.availableScenarios.find(el => el.id === scenarioId);
+  }
+
+  public getAllScenarios(): Scenario[] {
+    return this.availableScenarios;
+  }
+
+
+  private async updateRenewable() {
     const tasks = [] as any[];
-    this.scenarios.forEach(el => {
-      const task = firebase.database().ref(`users/${this.authService.getUserId()}/scenarios/${el.id}/renewablepercent`).once('value');
+    this.renewablePercents = [];
+    this.availableScenarios.forEach(el => {
+      const percentData = { scenarioInfo: el, percents: [] } as RenewablePercents;
+      const task = firebase.database().ref(`users/${this.authService.getUserId()}/scenarios/${el.id}/renewablepercent`)
+      .once('value').then(snapshot => {
+        snapshot.forEach(doc => {
+          percentData.percents.push({ year: Number(doc.key), percent: doc.val().percent });
+        });
+        this.renewablePercents.push(percentData);
+      });
       tasks.push(task);
     });
-    return Promise.all([...tasks]).then(response => {
-      for (let i = 0; i < response.length; i++) {
-        const percentData = [];
-        Object.keys(response[i].val()).forEach(year => {
-          percentData.push({'year': Number(year), percent: response[i].val()[year].percent});
-        })
-        this.renewablePercents.push({ scenarioData: this.scenarios[i],  percents: percentData });
-      }
-  });
-}
+    await Promise.all([...tasks]);
+    this.renewablePercentSubject.next(this.renewablePercents);
+  }
+
+  setSelectedScenario(scenarioId: string) {
+    this.selectedScenario = scenarioId;
+  }
+
+  getSelectedScenario(): Scenario {
+    return this.availableScenarios.find(el => el.id === this.selectedScenario);
+  }
 
 }
 

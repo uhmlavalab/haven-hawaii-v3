@@ -1,25 +1,13 @@
 <app-menu-blade [menuState]="chartMenuState" [menuItems]="chartItems"> </app-menu-blade>
 <app-menu-blade [menuState]="mapMenuState" [menuItems]="mapItems"> </app-menu-blade>
-<app-menu-blade [menuState]="accountMenuState" [menuItems]="accountItems"> </app-menu-blade>
+<app-menu-blade [menuState]="settingsMenuState" [menuItems]="settingsItems"> </app-menu-blade>
 
 <img class="logo mat-elevation-z8" src="./assets/logo/havenlogo.png" mat-elevation-z2>
 
-<button mat-mini-fab color="primary" (click)="openDialog()" class="button-4">
-  <mat-icon>add</mat-icon>
+
+
+<button *ngFor="let button of buttons" [ngStyle]="{'bottom': button.bottom, 'left': button.left}" mat-mini-fab
+  [color]="(button.selected) ? 'primary' : 'warn'" (click)="button.click()" [matTooltip]="button.text"
+  matTooltipPosition="right">
+  <mat-icon>{{button.icon}}</mat-icon>
 </button>
-
-<button mat-mini-fab (click)="toggleChartMenu()" color="primary" class="button-2">
-  <mat-icon>show_chart</mat-icon>
-</button>
-
-<button mat-mini-fab (click)="toggleMapMenu()" color="primary" class="button-3">
-  <mat-icon>map</mat-icon>
-</button>
-
-<button mat-mini-fab (click)="toggleAccountMenu()" color="primary" class="button-1">
-  <mat-icon>perm_identity</mat-icon>
-</button>
-
-
-
-

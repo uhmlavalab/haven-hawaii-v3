@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HavenSharedModule } from '@app/haven-shared';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { HavenAppsModule } from '@app/haven-features/haven-apps';
 
 import { HavenWindowComponent } from './component/haven-window.component';
 import { HavenWindowFactoryComponent } from './factory/haven-window-factory.component';
@@ -18,7 +18,7 @@ import { HavenWindowService } from './services/haven-window.service';
   imports: [
     CommonModule,
     HavenSharedModule,
-    LeafletModule.forRoot()
+    HavenAppsModule,
   ],
   declarations: [
     HavenWindowComponent,

@@ -4,10 +4,12 @@ import * as firebase from 'firebase';
 
 import { HavenNewScenarioComponent } from '../../components/haven-new-scenario/haven-new-scenario.component';
 import { AuthService } from '@app/haven-core';
-import { Scenario } from '../../shared/scenario';
+import { Scenario } from '../haven-scenario.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,7 @@ export class HavenNewScenarioService {
     private afStore: AngularFirestore,
     private afFuncs: AngularFireFunctions) { }
 
-  openDialog(): void {
+  openNewScenarioDialog(): void {
     const dialogRef = this.dialog.open(HavenNewScenarioComponent, {
       width: '500px',
     });

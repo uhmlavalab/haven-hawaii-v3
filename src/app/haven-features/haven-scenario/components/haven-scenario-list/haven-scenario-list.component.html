@@ -1,0 +1,15 @@
+<h1>Scenarios</h1>
+
+<mat-list>
+  <mat-list-item *ngFor="let scenario of scenarios">
+    <button mat-mini-fab [ngStyle]="{'background': scenario.color, 'color': 'white'}" (click)="configureScenario(scenario)">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <h4 mat-line>{{scenario.name}}</h4>
+    <p mat-line> Last Updated: {{(scenario.lastUpdate) ? (scenario.lastUpdate.toDate() | date: 'short') : null }} </p>
+    <p mat-line> Location: {{scenario.latitude}}'N {{scenario.longitude}}'W </p>
+    <button mat-mini-fab color="warn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>

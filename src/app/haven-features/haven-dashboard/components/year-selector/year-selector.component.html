@@ -16,8 +16,13 @@
 
   <div class="legend mat-elevation-z8">
     <mat-chip-list>
-      <mat-chip *ngFor="let set of dataSets" [ngStyle]="{'background': set.backgroundColor}" selected>{{ set.label }}-
-        {{setValue(set.label)}}%</mat-chip>
+      <mat-chip *ngFor="let set of dataSets"
+      [ngStyle]="{'background': set.backgroundColor, 'color': 'white'}"
+      [ngClass]="{'scenario-selected': selectedScenario === set.id}"
+      (click)="selectScenario(set.id)">
+
+        {{ set.label }} - {{setValue(set.label)}}% <mat-icon style="margin-left: 4px;" (click)="configureScenario(set.id)">settings</mat-icon>
+      </mat-chip>
     </mat-chip-list>
   </div>
 

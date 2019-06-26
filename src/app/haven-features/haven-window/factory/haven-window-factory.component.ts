@@ -27,7 +27,15 @@ export class HavenWindowFactoryComponent implements OnInit {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(HavenWindowComponent);
     const viewContainerRef = this.havenWindowHost.viewContainerRef;
     const componentRef = viewContainerRef.createComponent(componentFactory);
-    (componentRef.instance as HavenWindowComponent).havenWindow = havenWindow;
+    (componentRef.instance as HavenWindowComponent).id = havenWindow.id;
+    (componentRef.instance as HavenWindowComponent).left = havenWindow.left;
+    (componentRef.instance as HavenWindowComponent).top = havenWindow.top;
+    (componentRef.instance as HavenWindowComponent).width = havenWindow.width;
+    (componentRef.instance as HavenWindowComponent).height = havenWindow.height;
+    (componentRef.instance as HavenWindowComponent).name = havenWindow.name;
+    (componentRef.instance as HavenWindowComponent).color = havenWindow.color;
+    (componentRef.instance as HavenWindowComponent).appType = havenWindow.appType;
+    (componentRef.instance as HavenWindowComponent).query = havenWindow.query;
     this.havenWindowComponentList[havenWindow.id] = componentRef;
   }
 

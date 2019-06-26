@@ -1,3 +1,28 @@
-<p>
-  haven-configure-scenario works!
-</p>
+<h1>Configure Scenario</h1>
+
+<form [formGroup]="scenarioForm" (ngSubmit)="submitForm()">
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="Name" formControlName="name" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Latitude" formControlName="latitude" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Longitude" formControlName="longitude" required>
+  </mat-form-field>
+
+  <mat-chip-list #chipList formControlName="color">
+    <mat-chip *ngFor="let color of colors"
+      [ngStyle]="{'background': color.value, color:'white', width: (90 / colors.length) + '%'}"
+      [ngClass]="{'color-selected': selectedColor !== color.value}" (click)="changeColor(color.value)">
+    </mat-chip>
+  </mat-chip-list>
+
+  <br>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!scenarioForm.valid">Submit</button>
+
+</form>

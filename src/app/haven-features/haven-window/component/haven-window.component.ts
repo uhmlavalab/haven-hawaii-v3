@@ -1,14 +1,10 @@
-import { Component, AfterContentInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterContentInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 
 import { HavenWindowService } from '../services/haven-window.service';
 
 import { HavenWindow } from '../shared/haven-window';
-import { MatToolbar } from '@angular/material';
 
-
-import * as L from 'leaflet';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-
 
 @Component({
   selector: 'app-haven-window',
@@ -18,49 +14,26 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   animations: [
     trigger('menuOpen', [
       state('notactive', style({ bottom: '-50px' })),
-      state('active', style({ bottom: '-200px'})),
+      state('active', style({ bottom: '-200px' })),
       transition('notactive <=> active', animate('750ms'))
     ]),
   ],
 
 })
-export class HavenWindowComponent extends HavenWindow implements AfterContentInit  {
-
-  @ViewChild('windowDiv', { static: true }) windowDiv: ElementRef;
-  @ViewChild('windowHeader', { static: true }) windowHeader: MatToolbar;
-  @ViewChild('windowFooter', { static: true }) windowFooter: MatToolbar;
-
-  drawerOpen = false;
-
-  havenWindow: HavenWindow;
-  colors = ['#21897E', '#5386E4', '#88498F', '#DD6E42', '#6C698D'];
-  selectedColor: string;
-  rpsPercent: number;
+export class HavenWindowComponent extends HavenWindow implements AfterContentInit {
 
   menuState = 'notactive';
 
-  leafletMap: L.Map;
-  @ViewChild('chartDiv', { static: true }) chartDiv: ElementRef;
-  options = {
-    layers: [
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
-    ],
-    zoom: 9,
-    center: L.latLng(21.30, -157.85)
-  };
-
+  @ViewChild('windowDiv', { static: true }) windowDiv: ElementRef;
 
   constructor(private havenWindowService: HavenWindowService) {
     super();
-    this.rpsPercent = Math.floor(100 * Math.random());
-    this.selectedColor = this.colors[Math.floor(Math.random() * this.colors.length)];
-    console.log(this.selectedColor)
-   }
+  }
 
   ngAfterContentInit() {
     this.setWindowInitialSettings();
     this.havenWindowService.WindowZUpdate.subscribe(windows => {
-      this.windowDiv.nativeElement.style.zIndex = windows[this.havenWindow.id];
+      this.windowDiv.nativeElement.style.zIndex = windows[this.id];
     });
   }
 
@@ -74,20 +47,11 @@ export class HavenWindowComponent extends HavenWindow implements AfterContentIni
   }
 
   removeWindow() {
-    this.havenWindowService.removeWindow(this.havenWindow.id);
+    this.havenWindowService.removeWindow(this.id);
   }
 
-  drawerToggle() {
-    this.drawerOpen = !this.drawerOpen;
-  }
-
-  setMap(leafletMap: any) {
-    this.leafletMap = leafletMap;
-
-  }
 
   toggleMenu() {
-    console.log('hi');
     (this.menuState === 'active') ? this.menuState = 'notactive' : this.menuState = 'active';
   }
 

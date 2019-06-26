@@ -1,19 +1,18 @@
-<div #windowDiv class="window" style="position:absolute;" appHavenWindowBringforward [havenWindow]="havenWindow">
+<div #windowDiv class="window" style="position:absolute;" appHavenWindowBringforward [havenWindow]="this">
 
-  <div class="app-container mat-elevation-z8" #chartDi [ngStyle]="{'border-color': selectedColor}">
-    <div style="height: 100%;" leaflet (leafletMapReady)="setMap($event)" [leafletOptions]="options">
-    </div>
+  <div class="app-container mat-elevation-z8" [ngStyle]="{'border-color': color}">
+   <app-factory [appType]="appType" [id]="id" [query]="query" #appDiv> </app-factory>
   </div>
   <div class="title mat-elevation-z8" #title appHavenWindowDrag
-    [ngStyle]="{'background': selectedColor, 'color': 'white', 'border-color': selectedColor}" [windowDiv]="windowDiv"
-    [havenWindow]="havenWindow">
+    [windowDiv]="windowDiv"
+    [havenWindow]="this" [ngStyle]="{'background': color, 'color': 'white', 'border-color': color}" >
 
     <mat-icon matTooltip="Open Menu"
       style="background: teal;  cursor: pointer;float:left;border-radius: 100%; margin: 4px; border: 2px solid white; height: 20px; width: 20px;"
       (click)="toggleMenu()">
     </mat-icon>
 
-    Post April - 2030 - {{rpsPercent}}%
+    {{ name }} - 2030
 
     <mat-icon matTooltip="Close"
       style="background: #ef3030; cursor: pointer;float:right;border-radius: 100%;  margin: 4px; border: 2px solid white; height: 20px; width: 20px;"
@@ -29,11 +28,11 @@
   </div>
 
 
-  <div class="resize-handle" appHavenWindowResize [windowDiv]="windowDiv" [havenWindow]="havenWindow" [titleDiv]="title"
-    [menuDiv]="menu"></div>
+  <div class="resize-handle" appHavenWindowResize [windowDiv]="windowDiv" [havenWindow]="this" [titleDiv]="title"
+    [menuDiv]="menu" [appDiv]="appDiv"></div>
 
-  <div class="window-menu mat-elevation-z8" #menu [ngStyle]="{'color': selectedColor, 'border-color': selectedColor}"
-    [@menuOpen]="menuState">
+  <div class="window-menu mat-elevation-z8" #menu [ngStyle]="{'color': color, 'border-color': color}"
+    [@menuOpen]="menuState" appHavenWindowBringforward [havenWindow]="this">
 
   </div>
 </div>
