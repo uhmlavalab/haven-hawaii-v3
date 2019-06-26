@@ -6,19 +6,9 @@ import { AuthService } from '@app/haven-core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Subject } from 'rxjs';
-import { Scenario } from '@app/haven-features/haven-scenario';
+import { Scenario, HavenScenarioService } from '@app/haven-features/haven-scenario';
+import { ChartType, MapType} from '@app/haven-features/haven-apps/haven-apps.service';
 
-export enum ChartType {
-  'capacity',
-  'load',
-  'generation'
-}
-
-export enum MapType {
-  'satellite',
-  'street',
-  'terrain'
-}
 
 @Injectable()
 export class HavenWindowService {
@@ -32,7 +22,7 @@ export class HavenWindowService {
 
   currentZoom = 0;
 
-  constructor(private authService: AuthService, private afStore: AngularFirestore) {
+  constructor(private scenarioService: HavenScenarioService, private afStore: AngularFirestore) {
 
   }
 
@@ -117,7 +107,8 @@ export class HavenWindowService {
       window.name = scenario.name,
       window.id = this.afStore.createId();
     window.appType = AppType.plotly;
-    window.query = { scenario,  data: { year: 2030, type }};
+    window.scenario = scenario;
+    window.query = { data: { year: this.scenarioService.getActiveYear(), type }};
     this.addWindow(window);
   }
 
@@ -131,7 +122,8 @@ export class HavenWindowService {
       window.name = scenario.name,
       window.id = this.afStore.createId();
     window.appType = AppType.leaflet;
-    window.query = { scenario, data: { year: 203, type}};
+    window.scenario = scenario;
+    window.query = { data: { year: this.scenarioService.getActiveYear(), type}};
     this.addWindow(window);
   }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { Scenario } from '@app/haven-features/haven-scenario';
+import { MapType } from '../../haven-apps.service';
 
 @Component({
   selector: 'app-map',
@@ -8,10 +10,12 @@ import * as L from 'leaflet';
 })
 export class MapComponent implements OnInit {
 
-  loaded = false;
   id: string;
-  leafletMap: L.Map;
+  scenario: Scenario;
   query: any;
+
+  loaded = false;
+  leafletMap: L.Map;
 
   options = {
     layers: [
@@ -28,16 +32,15 @@ export class MapComponent implements OnInit {
 
   setMap(leafletMap: any) {
     this.leafletMap = leafletMap;
-    this.options.center = L.latLng(this.query.scenario.latitude, -this.query.scenario.longitude);
-    console.log(this.query.data.type);
+    this.options.center = L.latLng(this.scenario.latitude, -this.scenario.longitude);
     switch (this.query.data.type) {
-      case 0:
+      case MapType.satellite:
         this.leafletMap.addLayer(L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: '...' }));
         break;
-      case 1:
+      case MapType.street:
         this.leafletMap.addLayer(L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }));
         break;
-      case 2:
+      case MapType.terrain:
         this.leafletMap.addLayer(L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '...' }));
         break;
     }

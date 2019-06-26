@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver, ComponentRef, Input, ComponentFactory } from '@angular/core';
 
-import { ChartComponent } from '../components/chart/chart.component';
-import { MapComponent } from '../components/map/map.component';
-import { HavenAppHostDirective } from './app-factory-host.directive';
+import { ChartMenuComponent } from '../components/chart-menu/chart-menu.component';
+import { MapMenuComponent } from '../components/map-menu/map-menu.component';
+import { HavenAppMenuHostDirective } from './app-menu-factory-host.directive';
 import { Scenario } from '@app/haven-features/haven-scenario';
 
 export enum AppType {
@@ -12,13 +12,13 @@ export enum AppType {
 
 
 @Component({
-  selector: 'app-factory',
-  templateUrl: './app-factory.component.html',
-  styleUrls: ['./app-factory.component.css']
+  selector: 'app-menu-factory',
+  templateUrl: './app-menu-factory.component.html',
+  styleUrls: ['./app-menu-factory.component.css']
 })
-export class AppFactoryComponent implements OnInit {
+export class AppMenuFactoryComponent implements OnInit {
 
-  @ViewChild(HavenAppHostDirective, { static: true }) havenAppHost: HavenAppHostDirective;
+  @ViewChild(HavenAppMenuHostDirective, { static: true }) havenAppMenuHost: HavenAppMenuHostDirective;
   @Input() appType: AppType;
   @Input() query: any;
   @Input() id: string;
@@ -35,19 +35,15 @@ export class AppFactoryComponent implements OnInit {
   addApp() {
     let componentFactory = null;
     if (this.appType === AppType.leaflet) {
-      componentFactory = this.componentFactoryResolver.resolveComponentFactory(MapComponent);
+      componentFactory = this.componentFactoryResolver.resolveComponentFactory(MapMenuComponent);
     } else {
-      componentFactory = this.componentFactoryResolver.resolveComponentFactory(ChartComponent);
+      componentFactory = this.componentFactoryResolver.resolveComponentFactory(ChartMenuComponent);
     }
-    const viewContainerRef = this.havenAppHost.viewContainerRef;
+    const viewContainerRef = this.havenAppMenuHost.viewContainerRef;
     this.appRef = viewContainerRef.createComponent(componentFactory);
     this.appRef.instance.id = this.id;
     this.appRef.instance.query = this.query;
     this.appRef.instance.scenario = this.scenario;
-  }
-
-  resize() {
-    this.appRef.instance.resize();
   }
 
 }

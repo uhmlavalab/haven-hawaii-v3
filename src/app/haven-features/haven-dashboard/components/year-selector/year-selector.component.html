@@ -6,7 +6,7 @@
     </div>
     <div class="chart">
 
-      <mat-slider min="2016" max="2045" color="primary" [(ngModel)]="year" (input)="yearChange($event)"></mat-slider>
+      <mat-slider min="2016" max="2045" color="primary" [(ngModel)]="year" (input)="yearChange($event)" (change)="yearUpdate()"></mat-slider>
 
       <div #canvasContainer class="canvas-container">
         <canvas #lineDiv width="500" height="150"></canvas>

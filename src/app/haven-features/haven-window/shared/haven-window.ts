@@ -15,7 +15,8 @@ export class HavenWindow {
   zindex: number;
 
   appType: AppType;
-  query: {scenario: Scenario, data: any}
+  scenario: Scenario;
+  query: any;
 
 }
 

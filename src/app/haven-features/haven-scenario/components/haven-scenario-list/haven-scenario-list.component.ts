@@ -6,6 +6,9 @@ import { Scenario, HavenScenarioService, } from '../../services/haven-scenario.s
 import { Subscription } from 'rxjs';
 import { HavenConfigureScenarioService } from '../../services/haven-configure-scenario/haven-configure-scenario.service';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 @Component({
   selector: 'app-haven-scenario-list',
   templateUrl: './haven-scenario-list.component.html',
@@ -20,6 +23,7 @@ export class HavenScenarioListComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<HavenScenarioListComponent>,
     private scenarioService: HavenScenarioService,
     private configureScenarioService: HavenConfigureScenarioService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
@@ -27,7 +31,6 @@ export class HavenScenarioListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.scenariosSubscriber = this.scenarioService.availableScenariosSubject.subscribe(value => {
       this.scenarios = value;
-      console.log(this.scenarios);
     });
   }
 
@@ -41,6 +44,15 @@ export class HavenScenarioListComponent implements OnInit, OnDestroy {
 
   configureScenario(scenario: Scenario) {
     this.configureScenarioService.openDialog(scenario);
+  }
+
+  deleteScenario(scenarioId: string) {
+    this.scenarioService.deleteScenario(scenarioId).then((success) => {
+      this.snackBar.open(`Scenario Deleted`, '', {
+        duration: 2000,
+        verticalPosition: 'top'
+      });
+    });
   }
 
 

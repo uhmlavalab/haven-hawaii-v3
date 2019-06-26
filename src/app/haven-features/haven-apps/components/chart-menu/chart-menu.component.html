@@ -1,0 +1,26 @@
+<mat-form-field>
+  <mat-label>Value</mat-label>
+  <mat-select [(value)]="selectedValue" (selectionChange)="valueChange()">
+    <mat-option *ngFor="let item of valueItems" [value]="item.value">
+      {{item.text}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Scope</mat-label>
+  <mat-select [(value)]="selectedScope">
+    <mat-option *ngFor="let item of scopeItems" [value]="item.value">
+      {{item.text}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Chart</mat-label>
+  <mat-select [(value)]="selectedChart" (selectionChange)="chartChange()">
+    <mat-option *ngFor="let item of chartItems" [value]="item.value">
+      {{item.text}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

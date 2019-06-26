@@ -4,7 +4,8 @@ import { MenuBladeItem } from '../menu-blade-item/menu-blade-item.component';
 
 import { HavenNewScenarioService, HavenScenarioListService, HavenScenarioService } from '@app/haven-features/haven-scenario';
 
-import { HavenWindowService, ChartType, MapType } from '@app/haven-features/haven-window';
+import { HavenWindowService } from '@app/haven-features/haven-window';
+import { ChartType, MapType } from '@app/haven-features/haven-apps/haven-apps.service';
 
 @Component({
   selector: 'app-haven-dashboard',

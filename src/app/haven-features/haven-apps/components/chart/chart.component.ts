@@ -1,55 +1,72 @@
-import { Component, ElementRef, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit } from '@angular/core';
 
-import { HavenDatabaseService } from '@app/haven-features/haven-database';
+import { Scenario } from '@app/haven-features/haven-scenario';
+import { HavenAppsService } from '../../haven-apps.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements AfterViewInit, OnDestroy {
 
-  loaded = false;
   id: string;
   query: any;
+  scenario: Scenario;
+
+  loaded = false;
+
+  appDataSub: Subscription;
+
   @ViewChild('chart', { static: true }) chartDiv: ElementRef;
-  constructor(private database: HavenDatabaseService, private changeDetector: ChangeDetectorRef) {
+  constructor(private appService: HavenAppsService, private changeDetector: ChangeDetectorRef) {
 
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
 
-    this.database.getGenerationData(this.query.scenario.id).then(value => {
-      this.createChart();
+    this.appDataSub = this.appService.getAppDataSubject(this.id).subscribe(value => {
+      this.loaded = false;
+      if (value && Array.isArray(value.data) ) {
+        this.createChart(value.data, value.info);
+      }
     });
+
   }
 
-  createChart() {
+  ngOnDestroy() {
+    this.appDataSub.unsubscribe();
+  }
 
-    const trace1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      mode: 'markers',
-      type: 'scatter'
-    };
+  createChart(data: any[], info: any) {
 
-    const trace2 = {
-      x: [2, 3, 4, 5],
-      y: [16, 5, 11, 9],
-      mode: 'lines',
-      type: 'scatter'
-    };
+    data.forEach(el => {
+      if (info.chart === 'line') {
+        el.mode = 'lines+markers';
+        el.marker = {
+          size: 5
+        };
+        el.line = {
+          width: 3
+        };
+      } else if (info.chart === 'bar') {
+        el.type = 'bar';
+      } else {
+        el.mode = 'lines+markers';
+        el.marker = {
+          size: 5
+        };
+        el.line = {
+          width: 3
+        };
+      }
+    });
 
-    const trace3 = {
-      x: [1, 2, 3, 4],
-      y: [12, 9, 15, 12],
-      mode: 'lines+markers',
-      type: 'scatter'
-    };
     this.loaded = true;
     this.changeDetector.detectChanges();
     const layout = {
-      height: this.chartDiv.nativeElement.getBoundingClientRect().width,
+      height: this.chartDiv.nativeElement.getBoundingClientRect().height,
       width: this.chartDiv.nativeElement.getBoundingClientRect().width,
       margin: {
         t: 35,
@@ -61,8 +78,8 @@ export class ChartComponent implements OnInit {
         family: 'Roboto, sans-serif',
       },
       hovermode: 'closest',
+      barmode: 'stack'
     };
-    const data = [trace1, trace2, trace3];
 
     Plotly.newPlot(this.chartDiv.nativeElement, data, layout);
   }

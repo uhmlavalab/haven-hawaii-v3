@@ -3,9 +3,6 @@ import { MatDialog } from '@angular/material';
 import * as firebase from 'firebase';
 
 import { AuthService } from '@app/haven-core';
-import { Scenario } from '../haven-scenario.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-
 import { HavenConfigureScenarioComponent } from '../../components/haven-configure-scenario/haven-configure-scenario.component';
 
 import { MatSnackBar } from '@angular/material/snack-bar';

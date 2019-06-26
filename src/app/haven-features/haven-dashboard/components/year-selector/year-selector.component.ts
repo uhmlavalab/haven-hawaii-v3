@@ -19,7 +19,7 @@ import { HavenConfigureScenarioService } from '@app/haven-features/haven-scenari
 })
 export class YearSelectorComponent implements OnInit {
 
-  year = 2030;
+  year: number;
   menuState = 'notactive';
   @ViewChild('lineDiv', { static: true }) chartDiv: ElementRef;
   @ViewChild('canvasContainer', { static: true }) canvasContainer: ElementRef;
@@ -46,8 +46,12 @@ export class YearSelectorComponent implements OnInit {
         this.labels = this.createYears();
         this.dataSets.push(this.createDataSet(el));
       });
+      this.year = this.labels[0];
+      if (this.scenarios.length > 0) { this.selectScenario(this.scenarios[0].id); }
+      this.scenarioService.setActiveYear(this.year);
       this.createChart();
     });
+
 
   }
 
@@ -145,6 +149,10 @@ export class YearSelectorComponent implements OnInit {
     this.year = event.value;
     this.myChart.options.annotation.annotations[0].value = this.year;
     this.myChart.update();
+  }
+
+  yearUpdate() {
+    this.scenarioService.setActiveYear(this.year);
   }
 
   setValue(labelName: string) {
