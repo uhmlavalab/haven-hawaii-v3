@@ -105,7 +105,7 @@ export class ChartMenuComponent implements OnInit, OnDestroy {
           });
       });
     } else if (this.selectedValue === 'load') {
-      this.database.getLoad(this.scenario.id).then(loadData => {
+      this.database.getLoad(this.scenario.id, this.selectedYear).then(loadData => {
         this.appService.postAppDataInfo(this.id,
           {
             data: loadData,

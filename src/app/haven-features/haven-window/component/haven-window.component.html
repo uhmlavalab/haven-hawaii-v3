@@ -6,23 +6,13 @@
   <div class="title mat-elevation-z8" #title appHavenWindowDrag [windowDiv]="windowDiv" [havenWindow]="this"
     [ngStyle]="{'background': color, 'color': 'white', 'border-color': color}">
 
-    <mat-icon matTooltip="Open Menu"
-      style="background: teal;  cursor: pointer;float:left;border-radius: 100%; margin: 4px; border: 2px solid white; height: 20px; width: 20px;"
-      (click)="toggleMenu()">
-    </mat-icon>
+    <p>{{ name }} - {{ year }} - {{ renewablePercent }}%</p>
 
-    {{ name }} - {{ year }} - {{ renewablePercent }}%
-
-    <mat-icon matTooltip="Close"
-      style="background: #ef3030; cursor: pointer;float:right;border-radius: 100%;  margin: 4px; border: 2px solid white; height: 20px; width: 20px;"
-      (click)="removeWindow()">
-    </mat-icon>
-    <!-- <mat-icon matTooltip="Maximize"
-      style="background: #1eb01e;  cursor: pointer;float:right;border-radius: 100%; margin: 4px; border: 2px solid white; height: 20px; width: 20px;">
-    </mat-icon>
-    <mat-icon matTooltip="Minimize"
-      style="background: #e1c428; cursor: pointer; float:right; margin: 4px; border: 2px solid white; border-radius: 100%; height: 20px; width: 20px;">
-    </mat-icon> -->
+    <mat-icon style="background: #ef3030; float:right;" (click)="removeWindow()"> close </mat-icon>
+    <mat-icon *ngIf="lockState" style="background: #e1c428; float:right;" (click)="lockWindow()"> lock</mat-icon>
+    <mat-icon *ngIf="!lockState" style="background: #e1c428; float:right;" (click)="lockWindow()"> lock_open</mat-icon>
+    <mat-icon *ngIf="menuState === 'notactive'" style="background: #1eb01e;" (click)="toggleMenu()">vertical_align_bottom </mat-icon>
+    <mat-icon *ngIf="menuState === 'active'" style="background: #1eb01e;" (click)="toggleMenu()">vertical_align_top </mat-icon>
 
   </div>
 

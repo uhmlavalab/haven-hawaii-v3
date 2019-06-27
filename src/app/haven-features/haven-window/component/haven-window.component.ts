@@ -26,6 +26,7 @@ import { Subscription } from 'rxjs';
 export class HavenWindowComponent extends HavenWindow implements AfterContentInit, OnInit {
 
   menuState = 'notactive';
+  lockState = true;
   year = 0;
   renewablePercent = 0;
 
@@ -80,6 +81,10 @@ export class HavenWindowComponent extends HavenWindow implements AfterContentIni
 
   toggleMenu() {
     (this.menuState === 'active') ? this.menuState = 'notactive' : this.menuState = 'active';
+  }
+
+  lockWindow() {
+    this.lockState = !this.lockState;
   }
 
 }

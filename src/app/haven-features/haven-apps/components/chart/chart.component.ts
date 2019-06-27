@@ -41,17 +41,25 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
 
   createChart(data: any[], info: any) {
 
+    const dataSorted = [];
+
     data.forEach(el => {
       if (info.chart === 'line') {
         el.mode = 'lines+markers';
+        el.stackgroup = (el.name === 'Demand' || info.value === 'capacity') ? null : 'one';
         el.marker = {
+          color: el.color,
           size: 5
         };
         el.line = {
+          color: el.color,
           width: 3
         };
       } else if (info.chart === 'bar') {
         el.type = 'bar';
+        el.marker = {
+          color: el.color
+        };
       } else {
         el.mode = 'lines+markers';
         el.marker = {
