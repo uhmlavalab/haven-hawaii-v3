@@ -1,6 +1,6 @@
 
 <div class="container">
-  <div [hidden]="!loaded" style="height: 100%; width: 100%; position:absolute;" leaflet [leafletOptions]="options"
+  <div [hidden]="!loaded" style="height: 100%; width: 100%; position:absolute;" leaflet [leafletOptions]="options" [leafletLayersControl]="layersControl"
     (leafletMapReady)="setMap($event)">
   </div>
 

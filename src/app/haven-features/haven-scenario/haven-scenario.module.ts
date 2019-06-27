@@ -10,12 +10,14 @@ import { HavenScenarioListService } from './services/haven-scenario-list/haven-s
 import { HavenNewScenarioComponent } from './components/haven-new-scenario/haven-new-scenario.component';
 import { HavenConfigureScenarioComponent } from './components/haven-configure-scenario/haven-configure-scenario.component';
 import { HavenScenarioListComponent } from './components/haven-scenario-list/haven-scenario-list.component';
+import { HavenNewLayerComponent } from './components/haven-new-layer/haven-new-layer.component';
 
 @NgModule({
   declarations: [
     HavenNewScenarioComponent,
     HavenConfigureScenarioComponent,
     HavenScenarioListComponent,
+    HavenNewLayerComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { HavenScenarioListComponent } from './components/haven-scenario-list/hav
   exports: [
     HavenNewScenarioComponent,
     HavenConfigureScenarioComponent,
-    HavenScenarioListComponent
+    HavenScenarioListComponent,
+    HavenNewLayerComponent
   ],
   providers: [
     HavenScenarioService,
@@ -35,7 +38,8 @@ import { HavenScenarioListComponent } from './components/haven-scenario-list/hav
   entryComponents: [
     HavenConfigureScenarioComponent,
     HavenNewScenarioComponent,
-    HavenScenarioListComponent
+    HavenScenarioListComponent,
+    HavenNewLayerComponent
   ]
 })
 export class HavenScenarioModule { }

@@ -37,6 +37,7 @@ export class HavenWindowFactoryComponent implements OnInit {
     (componentRef.instance as HavenWindowComponent).appType = havenWindow.appType;
     (componentRef.instance as HavenWindowComponent).query = havenWindow.query;
     (componentRef.instance as HavenWindowComponent).scenario = havenWindow.scenario;
+    (componentRef.instance as HavenWindowComponent).lock = havenWindow.lock;
     this.havenWindowComponentList[havenWindow.id] = componentRef;
   }
 

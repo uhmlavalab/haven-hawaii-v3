@@ -14,6 +14,8 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
   id: string;
   query: any;
   scenario: Scenario;
+  lock: boolean;
+  lockSub: Subscription;
 
   loaded = false;
 
@@ -33,15 +35,27 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
       }
     });
 
+    this.lockSub = this.appService.lockSub.subscribe(value => { if (value.id === this.id) { this.lock = value.lock; } });
+
   }
 
   ngOnDestroy() {
     this.appDataSub.unsubscribe();
+    this.lockSub.unsubscribe();
+
   }
 
   createChart(data: any[], info: any) {
 
     const dataSorted = [];
+
+    const heatData = [{
+      type: 'heatmap',
+      colorscale: 'Portland',
+      z: [],
+      y: [],
+      x: data[0].x
+    }];
 
     data.forEach(el => {
       if (info.chart === 'line') {
@@ -60,14 +74,9 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
         el.marker = {
           color: el.color
         };
-      } else {
-        el.mode = 'lines+markers';
-        el.marker = {
-          size: 5
-        };
-        el.line = {
-          width: 3
-        };
+      } else if (info.chart === 'heat') {
+        heatData[0].z.push(el.y);
+        heatData[0].y.push(el.name);
       }
     });
 
@@ -77,19 +86,23 @@ export class ChartComponent implements AfterViewInit, OnDestroy {
       height: this.chartDiv.nativeElement.getBoundingClientRect().height,
       width: this.chartDiv.nativeElement.getBoundingClientRect().width,
       margin: {
-        t: 35,
+        t: 65,
         l: 55,
         r: 20,
         b: 50,
       },
+      title: info.value.charAt(0).toUpperCase() + info.value.slice(1),
       font: {
         family: 'Roboto, sans-serif',
       },
       hovermode: 'closest',
       barmode: 'stack'
     };
-
-    Plotly.newPlot(this.chartDiv.nativeElement, data, layout);
+    if (info.chart === 'heat') {
+      Plotly.newPlot(this.chartDiv.nativeElement, heatData, layout);
+    } else {
+      Plotly.newPlot(this.chartDiv.nativeElement, data, layout);
+    }
   }
 
   public resize() {

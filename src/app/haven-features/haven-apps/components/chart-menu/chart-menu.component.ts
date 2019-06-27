@@ -14,6 +14,8 @@ export class ChartMenuComponent implements OnInit, OnDestroy {
   id: string;
   query: any;
   scenario: Scenario;
+  lock: boolean;
+  lockSub: Subscription;
 
   selectedValue = 'capacity';
   selectedScope = 'yearly';
@@ -79,10 +81,14 @@ export class ChartMenuComponent implements OnInit, OnDestroy {
     this.appService.addAppDataSubject(this.id);
     this.reValues = this.scenarioService.getScenarioREValues(this.scenario.id).percents;
     this.postNewAppInfo(this.query.data.year);
+    this.lockSub = this.appService.lockSub.subscribe(value => { if (value.id === this.id) { this.lock = value.lock; } });
     this.yearSub = this.scenarioService.activeYearSubject.subscribe(year => {
       this.selectedYear = year;
       this.postNewAppInfo(year);
-      this.getData();
+      if (!this.lock) {
+        this.getData();
+      }
+
     });
   }
 
@@ -122,6 +128,7 @@ export class ChartMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.yearSub.unsubscribe();
+    this.lockSub.unsubscribe();
     this.appService.removeAppSubject(this.id);
     this.appService.removeAppDataSubject(this.id);
   }

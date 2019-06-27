@@ -8,6 +8,7 @@ import { Scenario } from '../haven-scenario.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { LoadingDialogComponent } from '@app/haven-shared/components/loading-dialog/loading-dialog.component';
 
 
 @Injectable({
@@ -30,7 +31,20 @@ export class HavenNewScenarioService {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.uploadNewScenario(result.newScenario, result.capFile, result.genFile, result.stationsFile);
+
       }
+    });
+  }
+
+  openProgressDialog(scenarioId: string): void {
+    const dialogRef = this.dialog.open(LoadingDialogComponent, {
+      width: '500px',
+      data: {scenarioId},
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
     });
   }
 
@@ -45,7 +59,10 @@ export class HavenNewScenarioService {
     const genFilePath = `users/${this.authService.getUserId()}/scenarios/${newScenario.id}/rawgeneration.csv`;
     const stationFilePath = `users/${this.authService.getUserId()}/scenarios/${newScenario.id}/rawstation.csv`;
 
-    const firestoreTask = firebase.firestore().collection(`users/${this.authService.getUserId()}/scenarios/`).doc(newScenario.id).set(newScenario);
+    const firestoreTask = firebase.firestore().collection(`users/${this.authService.getUserId()}/scenarios/`).doc(newScenario.id).set(newScenario).then(() => {
+      this.openProgressDialog(newScenario.id);
+    });
+
     const capTask = this.storage.upload(capFilePath, capFile);
     const genTask = this.storage.upload(genFilePath, genFile);
     const stationsTask = this.storage.upload(stationFilePath, stationsFile);
@@ -69,4 +86,6 @@ export class HavenNewScenarioService {
       return Promise.resolve(null);
     }
   }
+
+
 }

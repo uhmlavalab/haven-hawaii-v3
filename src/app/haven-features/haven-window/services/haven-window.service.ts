@@ -7,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Subject } from 'rxjs';
 import { Scenario, HavenScenarioService } from '@app/haven-features/haven-scenario';
-import { ChartType, MapType} from '@app/haven-features/haven-apps/haven-apps.service';
+import { ChartType, MapType } from '@app/haven-features/haven-apps/haven-apps.service';
 
 
 @Injectable()
@@ -20,7 +20,7 @@ export class HavenWindowService {
   HavenWindowAdd = new Subject<HavenWindow>();
   HavenWindowRemove = new Subject<HavenWindow>();
 
-  currentZoom = 0;
+  currentZoom = 1;
 
   constructor(private scenarioService: HavenScenarioService, private afStore: AngularFirestore) {
 
@@ -103,12 +103,13 @@ export class HavenWindowService {
     window.width = 400;
     window.left = 200;
     window.top = 200;
-    window.color = scenario.color,
-      window.name = scenario.name,
-      window.id = this.afStore.createId();
+    window.color = scenario.color;
+    window.name = scenario.name;
+    window.id = this.afStore.createId();
     window.appType = AppType.plotly;
     window.scenario = scenario;
-    window.query = { data: { year: this.scenarioService.getActiveYear(), type }};
+    window.lock = false;
+    window.query = { data: { year: this.scenarioService.getActiveYear(), type } };
     this.addWindow(window);
   }
 
@@ -118,12 +119,13 @@ export class HavenWindowService {
     window.width = 400;
     window.left = 200;
     window.top = 200;
-    window.color = scenario.color,
-      window.name = scenario.name,
-      window.id = this.afStore.createId();
+    window.color = scenario.color;
+    window.name = scenario.name;
+    window.id = this.afStore.createId();
     window.appType = AppType.leaflet;
     window.scenario = scenario;
-    window.query = { data: { year: this.scenarioService.getActiveYear(), type}};
+    window.lock = false;
+    window.query = { data: { year: this.scenarioService.getActiveYear(), type } };
     this.addWindow(window);
   }
 

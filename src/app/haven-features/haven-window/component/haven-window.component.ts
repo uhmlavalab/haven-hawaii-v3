@@ -26,7 +26,6 @@ import { Subscription } from 'rxjs';
 export class HavenWindowComponent extends HavenWindow implements AfterContentInit, OnInit {
 
   menuState = 'notactive';
-  lockState = true;
   year = 0;
   renewablePercent = 0;
 
@@ -41,11 +40,13 @@ export class HavenWindowComponent extends HavenWindow implements AfterContentIni
   ngOnInit(): void {
     this.appService.addAppSubject(this.id);
     this.appSub = this.appService.getAppSubject(this.id).subscribe(data => {
-      if (data.hasOwnProperty('year')) {
-        this.year = data.year;
-      }
-      if (data.hasOwnProperty('re')) {
-        this.renewablePercent = data.re;
+      if (this.lock === false) {
+        if (data.hasOwnProperty('year')) {
+          this.year = data.year;
+        }
+        if (data.hasOwnProperty('re')) {
+          this.renewablePercent = data.re;
+        }
       }
     });
     this.scenarioService.getScenarioReference(this.scenario.id).onSnapshot(value => {
@@ -84,7 +85,8 @@ export class HavenWindowComponent extends HavenWindow implements AfterContentIni
   }
 
   lockWindow() {
-    this.lockState = !this.lockState;
+    this.lock = !this.lock;
+    this.appService.lockApp(this.id, this.lock);
   }
 
 }

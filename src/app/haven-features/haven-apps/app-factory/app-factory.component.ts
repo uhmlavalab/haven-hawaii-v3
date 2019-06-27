@@ -22,6 +22,7 @@ export class AppFactoryComponent implements OnInit {
   @Input() appType: AppType;
   @Input() query: any;
   @Input() id: string;
+  @Input() lock: boolean;
   @Input() scenario: Scenario;
 
   appRef: any;
@@ -44,6 +45,7 @@ export class AppFactoryComponent implements OnInit {
     this.appRef.instance.id = this.id;
     this.appRef.instance.query = this.query;
     this.appRef.instance.scenario = this.scenario;
+    this.appRef.instance.lock = this.lock;
   }
 
   resize() {

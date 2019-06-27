@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from '../haven-configure-scenario/haven-configure-scenario.component';
 import { Scenario } from '../../services/haven-scenario.service';
 import * as firebase from 'firebase';
+import { HavenNewLayerService } from '../../services/haven-new-layer/haven-new-layer.service';
 
 export interface DialogData {
   name: string;
@@ -35,6 +36,7 @@ export class HavenConfigureScenarioComponent {
 
   constructor(
     public dialogRef: MatDialogRef<HavenConfigureScenarioComponent>,
+    public newLayerService: HavenNewLayerService,
 
     @Inject(MAT_DIALOG_DATA) public data: Scenario) {
     this.selectedColor = data.color;
@@ -70,6 +72,10 @@ export class HavenConfigureScenarioComponent {
       updateScenario,
     };
     this.dialogRef.close(result);
+  }
+
+  addNewLayer() {
+    this.newLayerService.openDialog(this.data);
   }
 
 }

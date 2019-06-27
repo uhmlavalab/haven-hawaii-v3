@@ -2,6 +2,7 @@ import { Directive, ElementRef, HostListener, Input, ViewChild, } from '@angular
 
 import { HavenWindow } from '../shared/haven-window';
 import { AppFactoryComponent } from '@app/haven-features/haven-apps';
+import { HavenWindowService } from '../services/haven-window.service';
 
 @Directive({
   selector: '[appHavenWindowResize]'
@@ -22,7 +23,7 @@ export class HavenWindowResizeDirective {
   private startWindowWidth: number;
   private startWindowHeight: number;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private windowService: HavenWindowService) { }
 
   @HostListener('mousedown', ['$event']) onMouseDown(event) {
     this.resizeStartLeft = event.clientX;
@@ -39,8 +40,8 @@ export class HavenWindowResizeDirective {
 
   @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
     if (this.resizeSelected === true) {
-      this.havenWindow.width = Math.max(400, this.startWindowWidth + (event.clientX - this.resizeStartLeft));
-      this.havenWindow.height = Math.max(400, this.startWindowHeight + (event.clientY - this.resizeStartTop));
+      this.havenWindow.width = Math.max(400, this.startWindowWidth + (event.clientX - this.resizeStartLeft) * (1 / this.windowService.currentZoom));
+      this.havenWindow.height = Math.max(400, this.startWindowHeight + (event.clientY - this.resizeStartTop) * (1 / this.windowService.currentZoom));
       this.windowDiv.style.width = this.havenWindow.width + 'px';
       this.windowDiv.style.height = this.havenWindow.height + 'px';
       this.titleDiv.style.width = this.windowDiv.style.width;

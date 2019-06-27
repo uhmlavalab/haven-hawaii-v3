@@ -22,6 +22,7 @@ export class HavenAppsService {
 
   appDataSubjects = {};
 
+  lockSub = new BehaviorSubject<{id: string, lock: boolean}>({ id: null, lock: false});
   constructor() {
 
   }
@@ -62,5 +63,9 @@ export class HavenAppsService {
 
   postAppInfo(id: any, data: any) {
     this.appSubjects[id].next(data);
+  }
+
+  lockApp(id: string, lockStatus: boolean) {
+    this.lockSub.next({id, lock: lockStatus});
   }
 }

@@ -13,6 +13,7 @@ export class HavenWindow {
   left: number;
   top: number;
   zindex: number;
+  lock: boolean;
 
   appType: AppType;
   scenario: Scenario;

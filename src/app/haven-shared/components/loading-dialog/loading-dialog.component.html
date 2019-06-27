@@ -1,0 +1,8 @@
+<div class="container">
+<h1 *ngIf="progress !== 100"> Processing {{ name }}</h1>
+<h1 *ngIf="progress === 100"> Processing Complete</h1>
+  <mat-progress-bar class="example-margin" [color]="(progress === 100)? 'primary' : 'warn'"
+    [mode]="(progress === -1)? 'indeterminate' : 'determinate'" [value]="progress">
+  </mat-progress-bar>
+  <button mat-raised-button color="primary" [disabled]="progress !== 100" (click)="onNoClick()">Close</button>
+</div>

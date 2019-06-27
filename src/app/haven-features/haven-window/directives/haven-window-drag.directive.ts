@@ -37,8 +37,8 @@ export class HavenWindowDragDirective {
 
   @HostListener('document:mousemove', ['$event']) onMouseMove(event) {
     if (this.dragbarSelected === true) {
-      this.havenWindow.left = Math.max(0, this.startWindowLeft + (event.clientX - this.dragStartLeft));
-      this.havenWindow.top = Math.max(0, this.startWindowTop + (event.clientY - this.dragStartTop));
+      this.havenWindow.left = Math.max(0, this.startWindowLeft + (event.clientX - this.dragStartLeft) * (1 / this.windowService.currentZoom));
+      this.havenWindow.top = Math.max(0, this.startWindowTop + (event.clientY - this.dragStartTop) * (1 / this.windowService.currentZoom));
       this.windowDiv.style.left = this.havenWindow.left + 'px';
       this.windowDiv.style.top = this.havenWindow.top + 'px';
       event.stopPropagation();

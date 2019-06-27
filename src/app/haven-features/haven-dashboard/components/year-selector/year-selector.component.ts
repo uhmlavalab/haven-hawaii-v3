@@ -165,6 +165,7 @@ export class YearSelectorComponent implements OnInit {
   configureScenario(scenarioId: string) {
     this.configureScenarioService.openDialog(this.scenarios.find(el => el.id === scenarioId) as Scenario);
   }
+
   selectScenario(scenarioId: string) {
     this.selectedScenario = scenarioId;
     this.scenarioService.setSelectedScenario(scenarioId);

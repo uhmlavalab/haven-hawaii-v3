@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 
+import { HavenWindowService } from '@app/haven-features/haven-window';
 
 @Directive({
   selector: '[appHavenBackgroundDrag]'
@@ -20,7 +21,7 @@ export class HavenBackgroundDragDirective implements OnInit {
 
   private zoom = 1;
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private windowService : HavenWindowService) {
   }
 
   ngOnInit() {
@@ -30,6 +31,7 @@ export class HavenBackgroundDragDirective implements OnInit {
       this.zoom += delta;
       (this.zoom <= 0) ? this.zoom = 0.1 : this.zoom = this.zoom;
       this.background.style.zoom = this.zoom;
+      this.windowService.currentZoom = this.zoom;
     });
 
     this.zoomOut._elementRef.nativeElement.addEventListener('click', () => {
@@ -38,6 +40,7 @@ export class HavenBackgroundDragDirective implements OnInit {
       this.zoom += delta;
       (this.zoom <= 0) ? this.zoom = 0.1 : this.zoom = this.zoom;
       this.background.style.zoom = this.zoom;
+      this.windowService.currentZoom = this.zoom;
     });
 
   }

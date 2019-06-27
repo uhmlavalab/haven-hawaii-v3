@@ -23,6 +23,7 @@ export class AppMenuFactoryComponent implements OnInit {
   @Input() query: any;
   @Input() id: string;
   @Input() scenario: Scenario;
+  @Input() lock: boolean;
 
   appRef: any;
 

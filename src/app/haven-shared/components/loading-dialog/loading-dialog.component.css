@@ -1,0 +1,12 @@
+mat-progress-spinner {
+  width: 100%;
+}
+
+.container {
+  height: 135px;
+}
+
+.mat-raised-button {
+  margin-top: 28px;
+  width: 100%;
+}
