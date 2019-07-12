@@ -5,12 +5,23 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Scenario } from '../../services/haven-scenario.service';
 import * as firebase from 'firebase';
 
+import { HavenLayerFillService } from '../../services/haven-layer-fill/haven-layer-fill.service';
+
+
 export interface MapLayer {
   name: string;
   color: string;
   lastUpdate: any;
   scenarioId: string;
+  properties: any;
 }
+
+class Operation {
+  property: string;
+  value: number;
+  operand: string;
+}
+
 
 @Component({
   selector: 'app-haven-new-layer',
@@ -36,9 +47,20 @@ export class HavenNewLayerComponent {
   ];
   selectedColor = this.colors[0].value;
 
+  customFill = false;
+  tops = [];
+
+  operations: Operation[] = [];
+
+  currentOperation = '';
+  currentOperationLiteral = '';
+
+  layerProperties: any;
+  properties = [];
 
   constructor(
     public dialogRef: MatDialogRef<HavenNewLayerComponent>,
+    public layerFillService: HavenLayerFillService,
 
     @Inject(MAT_DIALOG_DATA) public data: Scenario) {
     this.selectedColor = data.color;
@@ -60,24 +82,105 @@ export class HavenNewLayerComponent {
 
   layerFileChange() {
     this.layerFileName = this.layerInputDiv.nativeElement.files[0].name;
-    this.layerForm.patchValue({layerFile: this.layerInputDiv.nativeElement.files[0]});
+    this.layerForm.patchValue({ layerFile: this.layerInputDiv.nativeElement.files[0] });
+
+    this.layerProperties = [];
+    this.properties = [];
+    this.operations = [];
+    const mapFile = this.layerForm.controls[`layerFile`].value;
+    const fileReader = new FileReader();
+    fileReader.addEventListener('load', () => {
+      const jsonFile = JSON.parse(fileReader.result as string);
+      this.layerProperties = jsonFile.features[0].properties;
+      this.properties.push("Custom Value");
+      this.properties.push(...Object.keys(this.layerProperties));
+    });
+    fileReader.readAsText(mapFile);
   }
 
 
   submitForm() {
-    console.log(this.data);
-    const layerDoc = {
-      scenarioId: this.data.id,
-      name: this.layerForm.controls[`name`].value,
-      color: this.layerForm.controls[`color`].value,
-      lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
-    } as MapLayer;
+    const mapFile = this.layerForm.controls[`layerFile`].value;
+    const fileReader = new FileReader();
+    fileReader.addEventListener('load', () => {
+      const jsonFile = JSON.parse(fileReader.result as string);
+      const layerDoc = {
+        scenarioId: this.data.id,
+        name: this.layerForm.controls[`name`].value,
+        color: this.layerForm.controls[`color`].value,
+        lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+        properties: jsonFile.features[0].properties,
+        operations: this.operations
+      } as MapLayer;
 
-    const result = {
-      layerDoc,
-      file: this.layerForm.controls[`layerFile`].value,
-    };
-    this.dialogRef.close(result);
+      const result = {
+        layerDoc,
+        file: mapFile,
+      };
+
+      this.dialogRef.close(result);
+
+
+    });
+    fileReader.readAsText(mapFile);
+
   }
 
+  customFillChange(event) {
+    this.customFill = event.checked;
+  }
+
+  submit() {
+    this.dialogRef.close(this.operations);
+  }
+
+  selChange(event, op: Operation) {
+    op.property = event.value;
+    op.value = this.layerProperties[op.property];
+    console.log(op.value);
+    this.updateFullOperation();
+  }
+
+  operandChange(event, op: Operation) {
+    op.operand = event.value;
+    this.updateFullOperation();
+  }
+
+  updateFullOperation() {
+    this.currentOperation = '';
+    this.currentOperationLiteral = '';
+    let count = 0;
+    this.operations.forEach(el => {
+      this.currentOperationLiteral += ` ${el.value.toString()} `;
+      if (el.property === 'Custom Value') {
+        this.currentOperation += ` ${el.value} `;
+      } else {
+        this.currentOperation += ` ${el.property} `;
+      }
+      if (count < this.operations.length - 1) {
+        this.currentOperation += ` ${el.operand} `;
+        this.currentOperationLiteral += ` ${el.operand} `;
+
+      }
+      count++;
+    });
+  }
+
+  remove(index: number) {
+    this.operations.splice(index, 1);
+    this.updateFullOperation();
+  }
+  add() {
+    const op = new Operation();
+    op.property = this.properties[0];
+    op.operand = '+';
+    op.value = 0;
+    this.operations.push(op);
+    this.updateFullOperation();
+  }
+
+  customValChange(event, op: Operation) {
+    op.value = event.target.value;
+    this.updateFullOperation();
+  }
 }

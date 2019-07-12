@@ -18,8 +18,49 @@
     {{ layerFileName }}
   </label>
 
-  <br>
+  <mat-slide-toggle color="primary" (change)="customFillChange($event)">Custom Fill</mat-slide-toggle>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!layerForm.valid">Submit</button>
+
+
+  <form *ngIf="customFill">
+
+    <div *ngFor="let operation of operations; index as i;">
+      <mat-form-field class="fill-selects">
+        <mat-label>Property</mat-label>
+        <mat-select (selectionChange)="selChange($event, operation)">
+          <mat-option *ngFor="let prop of properties" [value]="prop">{{prop}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="operation.property == 'Custom Value'" class="fill-selects">
+        <mat-label>Custom Value</mat-label>
+        <input matInput type="number" placeholder="Custom Value" (input)="customValChange($event, operation)">
+      </mat-form-field>
+
+      <mat-form-field class="fill-selects">
+        <mat-label>Operand</mat-label>
+        <mat-select (selectionChange)="operandChange($event, operation)">
+          <mat-option value="+"> + </mat-option>
+          <mat-option value="-"> - </mat-option>
+          <mat-option value="*"> * </mat-option>
+          <mat-option value="/"> / </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button style="float:right;" mat-flat-button color="warn" (click)="remove(i)">Remove</button>
+
+    </div>
+    <button mat-flat-button color="primary" (click)="add()">Add</button>
+    <hr>
+    <h2>{{ currentOperation }}</h2>
+    <h4>{{ currentOperationLiteral }}</h4>
+    <br>
+
+
+  </form>
+
+  <hr>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
 
 </form>

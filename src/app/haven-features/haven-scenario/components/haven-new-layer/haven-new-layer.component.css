@@ -26,3 +26,12 @@ input[type="file"] {
 .color-selected {
   border: 8px white solid
 }
+
+.mat-raised-button {
+  width: 100%;
+}
+
+.fill-selects {
+  width: 23%;
+  margin-right: 5%;
+}

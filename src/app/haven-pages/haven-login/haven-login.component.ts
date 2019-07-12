@@ -9,8 +9,8 @@ import { AuthService } from '@app/haven-core';
 })
 export class HavenLoginComponent {
 
-  email = '';
-  password = '';
+  email = 'havenhseo@gmail.com';
+  password = 'haven1';
   messageText: string;
 
   constructor(private authService: AuthService) {
@@ -18,9 +18,9 @@ export class HavenLoginComponent {
   }
 
   login() {
-    // if (this.email && this.password) {
-      this.authService.signinUser('havenhseo@gmail.com', 'haven1', 'home');
-    // }
+    if (this.email && this.password) {
+      this.authService.signinUser(this.email, this.password, 'home');
+    }
   }
 
   createAccount() {
