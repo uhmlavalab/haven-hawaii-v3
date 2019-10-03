@@ -3,6 +3,7 @@ import { HavenScenarioService, Scenario, RenewablePercents } from '@app/haven-fe
 import { HavenAppsService, ChartType } from '../../haven-apps.service';
 import { Subscription } from 'rxjs';
 import { HavenDatabaseService } from '@app/haven-features/haven-database';
+import { NrelDatabaseService } from '@app/haven-features/haven-database';
 
 @Component({
   selector: 'app-chart-menu',
@@ -74,7 +75,9 @@ export class ChartMenuComponent implements OnInit, OnDestroy {
   yearSub: Subscription;
   selectedYear: number;
 
-  constructor(private scenarioService: HavenScenarioService, private appService: HavenAppsService, private database: HavenDatabaseService) { }
+  constructor(private scenarioService: HavenScenarioService, private appService: HavenAppsService, private database: HavenDatabaseService, private nrelDB: NrelDatabaseService) {
+
+   }
 
   ngOnInit() {
     this.selectedValue = ChartType[this.query.data.type];
@@ -95,7 +98,9 @@ export class ChartMenuComponent implements OnInit, OnDestroy {
   getData() {
     this.appService.postAppDataInfo(this.id, null);
     if (this.selectedValue === 'capacity') {
-      this.database.getCapacity(this.scenario.id).then(capacityData => {
+      //this.database.getCapacity(this.scenario.id).then(capacityData => {
+      this.nrelDB.callNREL(this.selectedValue).then(capacityData => {
+        console.log(capacityData);
         this.appService.postAppDataInfo(this.id,
           {
             data: capacityData,

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HavenDatabaseService } from './haven-database.service';
+import { NrelDatabaseService } from './nrel-database.service';
 
 import { HavenScenarioModule } from '@app/haven-features/haven-scenario';
 
@@ -8,10 +9,11 @@ import { HavenScenarioModule } from '@app/haven-features/haven-scenario';
   declarations: [],
   imports: [
     CommonModule,
-    HavenScenarioModule
+    HavenScenarioModule,
   ],
   providers: [
-    HavenDatabaseService
+    HavenDatabaseService,
+    NrelDatabaseService
   ]
 })
 export class HavenDatabaseModule { }

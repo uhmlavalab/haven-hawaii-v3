@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://hevi.nrel.gov",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

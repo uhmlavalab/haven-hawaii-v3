@@ -104,6 +104,7 @@ export class HavenNewLayerComponent {
     const fileReader = new FileReader();
     fileReader.addEventListener('load', () => {
       const jsonFile = JSON.parse(fileReader.result as string);
+
       const layerDoc = {
         scenarioId: this.data.id,
         name: this.layerForm.controls[`name`].value,
