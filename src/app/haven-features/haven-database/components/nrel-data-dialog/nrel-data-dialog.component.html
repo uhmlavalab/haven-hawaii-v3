@@ -1,0 +1,19 @@
+<mat-list>
+  <ng-container *ngFor="let model of nrelData">
+    <mat-list-item>
+      <mat-icon color="primary" matListIcon>folder</mat-icon>
+      <h3>{{model.name}}</h3>
+    </mat-list-item>
+    <mat-list style="margin-left:30px;">
+      <div *ngFor="let scenario of model.scenarios">
+        <mat-list-item>
+          <mat-icon color="accent" matListIcon>keyboard_arrow_right</mat-icon>
+          <h5>{{ scenario.name }}</h5>
+          <button mat-icon-button color="warn" (click)="downloadData(model.id, scenario.id)">
+              <mat-icon>save</mat-icon>
+            </button>
+        </mat-list-item>
+      </div>
+    </mat-list>
+  </ng-container>
+</mat-list>

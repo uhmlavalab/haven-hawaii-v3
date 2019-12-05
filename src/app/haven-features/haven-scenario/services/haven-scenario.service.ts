@@ -19,6 +19,7 @@ export interface Scenario {
   color: string;
   latitude: number;
   longitude: number;
+  zoom: number;
 }
 
 

@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>{{data.selected_model_name}}</h1>
+<div mat-dialog-content>
+  <p>{{ data.selected_scenario_name }}</p>
+  <p>Range: {{minYear}} - {{maxYear}}</p>
+
+  <mat-tab-group>
+    <mat-tab label="Stations">
+      <table mat-table [dataSource]="stationsSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="technology">
+          <th mat-header-cell *matHeaderCellDef> Technology </th>
+          <td mat-cell *matCellDef="let element"> {{element.technology__name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="location_1">
+          <th mat-header-cell *matHeaderCellDef> Location Name 1 </th>
+          <td mat-cell *matCellDef="let element"> {{element.location_1__name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="location_2">
+          <th mat-header-cell *matHeaderCellDef> Location Name 2 </th>
+          <td mat-cell *matCellDef="let element"> {{element.location_2__name}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="stationsColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: stationsColumns;"></tr>
+      </table>
+    </mat-tab>
+
+    <mat-tab label="Capacity/Generation"> 
+      <table mat-table [dataSource]="capacitySource" class="mat-elevation-z8">
+          <ng-container matColumnDef="technology">
+            <th mat-header-cell *matHeaderCellDef> Technology </th>
+            <td mat-cell *matCellDef="let element"> {{element.technology}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="capacity">
+            <th mat-header-cell *matHeaderCellDef> Capacity </th>
+            <td mat-cell *matCellDef="let element"> {{element.capacity}} </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="capacityColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: capacityColumns;"></tr>
+        </table>
+    </mat-tab>
+  </mat-tab-group>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary">Import into Database</button>
+</div>

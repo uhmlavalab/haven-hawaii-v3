@@ -1,0 +1,62 @@
+<h2>Configure Map: {{ scenario.name }}</h2>
+
+<div *ngIf="!loaded" class="wrapper-image">
+  <img class="loading-image" src="./assets/logo/haven-animation.gif">
+</div>
+
+<div class="wrapper" *ngIf="loaded">
+
+  <div class="box">
+
+    <h4>Center</h4>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Latitude" [value]="latitude">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Longitude" [value]="longitude">
+    </mat-form-field>
+
+    <h4>Zoom</h4>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Zoom" [value]="zoom">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Save</button>
+
+  </div>
+
+  <div class="box">
+
+    <h4>Layers</h4>
+    <mat-select (selectionChange)="centerOnLayer($event)" placeholder="Select Layer">
+      <mat-option *ngFor="let layer of layers" [value]="layer">
+        {{layer.name}}
+      </mat-option>
+    </mat-select>
+
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let color of colors"
+        [ngStyle]="{'background': color.value, color:'white', width: (88 / colors.length) + '%'}"
+        [ngClass]="{'color-selected': selectedColor !== color.value}" (click)="changeLayerColor(color.value)">
+      </mat-chip>
+    </mat-chip-list>
+
+    <!-- <mat-select (selectionChange)="changeLayerColor($event)" placeholder="Select Color">
+      <mat-option style="color: red;" value="red">Red</mat-option>
+      <mat-option style="color: blue;" value="blue">Blue</mat-option>
+      <mat-option style="color: green;" value="green">Green</mat-option>
+      <mat-option style="color: purple;" value="Yellow">Purple</mat-option>
+    </mat-select> -->
+    <mat-divider></mat-divider>
+    <button mat-raised-button color="primary">Save</button>
+
+  </div>
+
+  <div class="box">
+
+    <div class="map mat-elevation-z8" [hidden]="!loaded" leaflet [leafletOptions]="options"
+      [leafletLayersControl]="layersControl" (leafletMapReady)="setMap($event)">
+    </div>
+
+  </div>
+</div>

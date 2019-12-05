@@ -1,3 +1,3 @@
 export * from './haven-database.module';
-export * from './haven-database.service';
-export * from './nrel-database.service';
+export * from './services/haven-database/haven-database.service';
+export * from './services/nrel-database/nrel-database.service';

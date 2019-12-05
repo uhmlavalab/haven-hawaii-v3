@@ -6,6 +6,7 @@ import { DialogData } from '../haven-configure-scenario/haven-configure-scenario
 import { Scenario } from '../../services/haven-scenario.service';
 import * as firebase from 'firebase';
 import { HavenNewLayerService } from '../../services/haven-new-layer/haven-new-layer.service';
+import { HavenConfigureMapService } from '../../services/haven-configure-map/haven-configure-map.service';
 
 export interface DialogData {
   name: string;
@@ -37,7 +38,7 @@ export class HavenConfigureScenarioComponent {
   constructor(
     public dialogRef: MatDialogRef<HavenConfigureScenarioComponent>,
     public newLayerService: HavenNewLayerService,
-
+    public configureMapService: HavenConfigureMapService,
     @Inject(MAT_DIALOG_DATA) public data: Scenario) {
     this.selectedColor = data.color;
     this.scenarioForm = new FormGroup({
@@ -58,7 +59,6 @@ export class HavenConfigureScenarioComponent {
   }
 
   submitForm() {
-    console.log(this.data);
     const updateScenario = {
       name: this.scenarioForm.controls[`name`].value,
       color: this.scenarioForm.controls[`color`].value,
@@ -76,6 +76,10 @@ export class HavenConfigureScenarioComponent {
 
   addNewLayer() {
     this.newLayerService.openDialog(this.data);
+  }
+
+  openMapConfigure() {
+    this.configureMapService.openDialog(this.data);
   }
 
 }

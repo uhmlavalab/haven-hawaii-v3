@@ -6,6 +6,8 @@ import { HavenNewScenarioService, HavenScenarioListService, HavenScenarioService
 
 import { HavenWindowService } from '@app/haven-features/haven-window';
 import { ChartType, MapType } from '@app/haven-features/haven-apps/haven-apps.service';
+import { NrelDatabaseService } from '@app/haven-features/haven-database';
+import { NrelDialogService } from '@app/haven-features/haven-database/services/nrel-dialog/nrel-dialog.service';
 
 @Component({
   selector: 'app-haven-dashboard',
@@ -86,6 +88,11 @@ export class HavenDashboardComponent {
 
   settingsItems = [
     {
+      text: 'NREL Database Retrieval',
+      icon: 'play_for_work',
+      click: () => { this.nrelDialogService.openNrelDataDialog(); },
+    },
+    {
       text: 'Sessions',
       icon: 'receipt',
       click: () => { },
@@ -111,6 +118,7 @@ export class HavenDashboardComponent {
     private newScenarioService: HavenNewScenarioService,
     private scenarioListService: HavenScenarioListService,
     private scenarioService: HavenScenarioService,
+    private nrelDialogService: NrelDialogService,
     public windowService: HavenWindowService) {
     this.configureButtonPositions();
   }

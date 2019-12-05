@@ -30,6 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -62,7 +63,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatToolbarModule,
     MatTooltipModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
   exports: [
     MatButtonModule,
@@ -92,7 +94,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatToolbarModule,
     MatTooltipModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
 })
 export class MaterialModule { }

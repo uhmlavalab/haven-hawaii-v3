@@ -98,8 +98,7 @@ export class ChartMenuComponent implements OnInit, OnDestroy {
   getData() {
     this.appService.postAppDataInfo(this.id, null);
     if (this.selectedValue === 'capacity') {
-      //this.database.getCapacity(this.scenario.id).then(capacityData => {
-      this.nrelDB.callNREL(this.selectedValue).then(capacityData => {
+      this.database.getCapacity(this.scenario.id).then(capacityData => {
         console.log(capacityData);
         this.appService.postAppDataInfo(this.id,
           {
